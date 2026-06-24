@@ -14,7 +14,12 @@ This project is a working educational/reference calculator suite. It runs locall
 
 ## Live Demo
 
-Live demo link coming soon.
+🌐 Live Demo
+https://capacitance-calculator-demo.vercel.app/
+
+This repository contains the original PHP/XAMPP development version.
+
+A static demo version is deployed on Vercel for public access using the link above.
 
 For now, run the project locally with XAMPP:
 

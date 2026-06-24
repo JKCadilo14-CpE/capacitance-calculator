@@ -1,0 +1,27 @@
+{
+  "name": "project2-calculator",
+  "version": "1.0.0",
+  "description": "A responsive PHP and JavaScript capacitance calculator for electronics students, hobbyists, and circuit reference workflows.",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "screenshots": "node scripts/capture-screenshots.js"
+  },
+  "keywords": [
+    "php",
+    "javascript",
+    "calculator",
+    "electronics",
+    "capacitor",
+    "capacitance",
+    "rc-time",
+    "charge-calculator",
+    "energy-calculator"
+  ],
+  "author": "Project2 Calculator Contributors",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "@types/node": "^26.0.0"
+  }
+}

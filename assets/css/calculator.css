@@ -1,0 +1,1042 @@
+/* Calculator styles: unit converter layout, form controls, validation, and result display. */
+
+.calculator-shell {
+    display: grid;
+    gap: 1rem;
+}
+
+.calculator-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.mode-selector-card {
+    margin-bottom: 1rem;
+    padding: 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+}
+
+.mode-selector-card label {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.mode-selector-card select {
+    min-height: 3rem;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.panel {
+    padding: 1rem;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.panel-header svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+}
+
+.panel p,
+.debug-list {
+    color: var(--color-text-muted);
+}
+
+.converter-form,
+.converter-calculator {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.calculator-device {
+    display: grid;
+    gap: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-device);
+    padding: 1rem;
+}
+
+.converter-calculator.calculator-device {
+    max-width: 28rem;
+}
+
+.series-calculator.calculator-device,
+.code-decoder-card.calculator-device,
+.rc-time-card.calculator-device,
+.charge-calculator-card.calculator-device,
+.energy-stored-card.calculator-device {
+    max-width: none;
+}
+
+.calculator-display {
+    display: grid;
+    gap: 0.35rem;
+    min-height: 10.5rem;
+    border: 1px solid var(--color-display-border);
+    border-radius: var(--radius-md);
+    background: var(--color-display-background);
+    color: var(--color-display-text);
+    padding: 1rem;
+    text-align: right;
+}
+
+.calculator-display[aria-invalid="true"] {
+    border-color: var(--color-error-border);
+    box-shadow: 0 0 0 3px var(--color-error-ring);
+}
+
+.display-label {
+    color: var(--color-display-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.display-input,
+.display-result {
+    display: block;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.05;
+}
+
+.display-input {
+    min-height: 2.4rem;
+    font-size: clamp(2rem, 11vw, 3rem);
+    font-weight: 700;
+}
+
+.display-result {
+    min-height: 1.85rem;
+    color: var(--color-result-accent);
+    font-size: clamp(1.25rem, 7vw, 1.75rem);
+    font-weight: 700;
+    padding-top: 0.15rem;
+}
+
+.converter-calculator .result-summary {
+    color: var(--color-display-muted);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.copy-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.copy-result-button {
+    min-height: 2.75rem;
+    border-color: var(--color-divider-subtle);
+    background: var(--color-display-overlay);
+    color: var(--color-display-text);
+    white-space: nowrap;
+}
+
+.copy-result-button:hover:not(:disabled) {
+    border-color: var(--color-success-border);
+    background: var(--color-display-overlay-strong);
+    color: var(--color-result-accent);
+}
+
+.copy-result-button:disabled {
+    border-color: var(--color-divider-subtle);
+    background: var(--color-display-overlay);
+    color: var(--color-display-muted);
+}
+
+.copy-result-button svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.copy-result-status {
+    min-height: 1.25rem;
+    color: var(--color-result-accent);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    text-align: right;
+}
+
+.charge-result-card .copy-result-actions {
+    margin-top: 0.5rem;
+}
+
+.field-group {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.field-group label {
+    color: var(--color-text);
+    font-size: 0.925rem;
+    font-weight: 700;
+}
+
+.field-label-static {
+    color: var(--color-text);
+    font-size: 0.925rem;
+    font-weight: 700;
+}
+
+.field-group input,
+.field-group select {
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-input-background);
+    color: var(--color-input-text);
+    font: inherit;
+    padding: 0.625rem 0.75rem;
+}
+
+.unit-pill {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-input-background);
+    color: var(--color-input-text);
+    font-weight: 800;
+    padding: 0.625rem 0.75rem;
+}
+
+.field-group input:focus,
+.field-group select:focus,
+.button:focus-visible,
+.key:focus-visible,
+.swap-button:focus-visible,
+.series-remove:focus-visible,
+.shared-keypad-summary:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-color: var(--color-primary);
+}
+
+.field-group input.is-keypad-active {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.field-group input[aria-invalid="true"] {
+    border-color: var(--color-error);
+}
+
+.field-help,
+.field-error {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.field-error {
+    min-height: 1.35rem;
+    color: var(--color-error);
+    font-weight: 700;
+}
+
+.unit-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+    gap: 1rem;
+}
+
+.swap-button {
+    width: 2.75rem;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-input-background);
+    color: var(--color-primary-strong);
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+
+.swap-button:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface-muted);
+}
+
+.swap-button:active {
+    transform: scale(0.96);
+}
+
+.swap-button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.button {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 0.625rem 1rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.button svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.button-primary {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+}
+
+.button-primary:hover {
+    background: var(--color-primary-strong);
+}
+
+.button-secondary {
+    border-color: var(--color-border);
+    background: var(--color-input-background);
+    color: var(--color-text);
+}
+
+.button-secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+.calculator-keypad {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.625rem;
+}
+
+.key {
+    min-width: 0;
+    min-height: 3.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-input-background);
+    color: var(--color-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.25rem;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, transform 100ms ease;
+    touch-action: manipulation;
+}
+
+.key:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface-muted);
+}
+
+.key:active {
+    transform: scale(0.97);
+}
+
+.key svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.key-secondary {
+    background: var(--color-surface-muted);
+    color: var(--color-primary-strong);
+}
+
+.key-convert {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+}
+
+.key-convert:hover {
+    background: var(--color-primary-strong);
+    color: var(--color-primary-contrast);
+}
+
+.key:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+}
+
+.key:disabled:hover {
+    border-color: var(--color-border);
+    background: var(--color-input-background);
+}
+
+.key-zero {
+    grid-column: span 2;
+}
+
+.key-decimal {
+    grid-column: span 2;
+}
+
+.shared-input-keypad {
+    max-width: 24rem;
+    margin-top: 0.125rem;
+}
+
+.shared-input-keypad[open] {
+    gap: 0.75rem;
+}
+
+.shared-keypad-summary {
+    width: fit-content;
+    color: var(--color-primary-strong);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.shared-keypad-summary::marker {
+    color: var(--color-primary);
+}
+
+.shared-keypad-status {
+    margin: 0;
+    border: 1px solid var(--color-display-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-display-background);
+    color: var(--color-display-muted);
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.625rem 0.75rem;
+}
+
+.shared-calculator-keypad {
+    gap: 0.5rem;
+}
+
+.shared-calculator-keypad .key {
+    min-height: 3.25rem;
+    font-size: 1.125rem;
+}
+
+.calculator-input-section,
+.calculation-history-placeholder,
+.calculator-explanation-section {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: 0.875rem;
+}
+
+.calculator-input-section {
+    background: var(--color-surface);
+}
+
+.calculation-history-placeholder {
+    background: var(--color-surface-muted);
+}
+
+.calculation-history-placeholder h4,
+.calculator-explanation-section h4 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.calculation-history-placeholder p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.45;
+}
+
+.history-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.history-entry {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    border: 1px solid var(--color-divider-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--color-history-entry);
+    padding: 0.625rem;
+}
+
+.history-entry-button {
+    display: grid;
+    gap: 0.25rem;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.history-entry-button:hover .history-entry-calculation {
+    color: var(--color-primary);
+}
+
+.history-entry-button:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+}
+
+.history-entry.is-legacy {
+    opacity: 0.78;
+}
+
+.history-entry-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.375rem 0.625rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.history-entry-calculation {
+    color: var(--color-text);
+    font-size: 0.925rem;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.history-entry-hint {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.history-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.history-clear,
+.history-export {
+    justify-self: start;
+    min-height: 2.75rem;
+}
+
+.history-export:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.series-calculator {
+    display: grid;
+    gap: 0.875rem;
+    margin-top: 0.875rem;
+}
+
+.series-list {
+    display: grid;
+    gap: 0.625rem;
+}
+
+.series-row {
+    display: grid;
+    gap: 0.625rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: 0.75rem;
+}
+
+.series-row-header,
+.series-row-title {
+    display: flex;
+    align-items: center;
+}
+
+.series-row-header {
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.series-row-title {
+    min-width: 0;
+    gap: 0.5rem;
+}
+
+.series-row-label {
+    min-width: 2.5rem;
+    min-height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-muted);
+    color: var(--color-primary-strong);
+    font-weight: 800;
+}
+
+.series-row-badge {
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.series-row-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(5.75rem, 0.42fr);
+    gap: 0.625rem;
+    align-items: end;
+}
+
+.series-remove {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-input-background);
+    color: var(--color-danger);
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 120ms ease;
+    touch-action: manipulation;
+}
+
+.series-remove:hover:not(:disabled) {
+    border-color: var(--color-error-border);
+    background: var(--color-danger-surface);
+}
+
+.series-remove:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.series-remove:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.series-remove svg {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.series-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+}
+
+.series-actions .button {
+    min-height: 3rem;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+#add-series-capacitor,
+#add-parallel-capacitor {
+    border-color: var(--color-success-border);
+    background: var(--color-success-surface);
+    color: var(--color-primary-strong);
+}
+
+#add-series-capacitor:hover,
+#add-parallel-capacitor:hover {
+    border-color: var(--color-primary);
+    background: var(--color-display-overlay-strong);
+}
+
+.series-result-card {
+    display: grid;
+    gap: 0.5rem;
+    min-height: 7.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-device);
+    padding: 1rem;
+}
+
+.calculator-result-display {
+    min-height: 10.5rem;
+    border-color: var(--color-display-border);
+    background: var(--color-display-background);
+    color: var(--color-display-text);
+    text-align: right;
+}
+
+.calculator-result-display .result-label,
+.calculator-result-display .result-summary,
+.calculator-result-display .series-breakdown,
+.calculator-result-display .series-technical-details,
+.calculator-result-display .decoder-result-unit span {
+    color: var(--color-display-muted);
+}
+
+.calculator-result-display .series-result-header {
+    align-items: flex-start;
+}
+
+.calculator-result-display .series-result-state {
+    border-color: var(--color-divider-subtle);
+    background: var(--color-display-overlay);
+    color: var(--color-display-muted);
+}
+
+.calculator-result-display .series-result-value {
+    color: var(--color-display-text);
+}
+
+.calculator-result-display .series-breakdown,
+.calculator-result-display .series-technical-details {
+    border-top-color: var(--color-divider-subtle);
+}
+
+.calculator-result-display .series-technical-details summary {
+    color: var(--color-result-accent);
+}
+
+.calculator-result-display .decoder-result-unit {
+    border-color: var(--color-divider-subtle);
+    background: var(--color-display-overlay);
+}
+
+.calculator-result-display .decoder-result-unit output {
+    color: var(--color-display-text);
+}
+
+.series-result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.series-result-state {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: 0.35rem 0.55rem;
+    text-transform: uppercase;
+}
+
+.series-result-value {
+    color: var(--color-text);
+    font-size: clamp(2.25rem, 11vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.series-result-card.has-result {
+    border-color: var(--color-success-border);
+    background: var(--color-success-surface);
+    box-shadow: 0 0 0 3px var(--color-success-shadow);
+}
+
+.series-result-card.calculator-result-display.has-result {
+    border-color: var(--color-success-border);
+    background: var(--color-display-background);
+    box-shadow: 0 0 0 3px var(--color-success-shadow);
+}
+
+.series-result-card.has-result .series-result-value {
+    color: var(--color-primary-strong);
+}
+
+.series-result-card.calculator-result-display.has-result .series-result-value,
+.decoder-result-card.calculator-result-display.has-result .decoder-result-unit output {
+    color: var(--color-result-accent);
+}
+
+.series-result-card.has-result .series-result-state {
+    border-color: var(--color-success-border);
+    background: var(--color-input-background);
+    color: var(--color-primary-strong);
+}
+
+.series-result-card.calculator-result-display.has-result .series-result-state {
+    border-color: var(--color-success-border);
+    background: var(--color-display-overlay-strong);
+    color: var(--color-result-accent);
+}
+
+.series-breakdown {
+    border-top: 1px solid var(--color-divider-subtle);
+    color: var(--color-text-muted);
+    font-family: Consolas, "Liberation Mono", monospace;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    padding-top: 0.625rem;
+}
+
+.series-technical-details {
+    border-top: 1px solid var(--color-divider-subtle);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    padding-top: 0.625rem;
+}
+
+.series-technical-details summary {
+    width: fit-content;
+    color: var(--color-primary-strong);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.series-technical-details summary:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+.series-technical-details output {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: Consolas, "Liberation Mono", monospace;
+    overflow-wrap: anywhere;
+}
+
+.code-decoder-card {
+    display: grid;
+    gap: 0.875rem;
+    margin-top: 0.875rem;
+}
+
+.code-input-row {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.code-input-row .button {
+    min-height: 3rem;
+}
+
+#capacitor-code {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.code-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.code-example {
+    min-width: 3.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-primary-strong);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 120ms ease;
+    touch-action: manipulation;
+}
+
+.code-example:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface-muted);
+}
+
+.code-example:active {
+    transform: scale(0.97);
+}
+
+.code-example:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.decoder-result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem;
+}
+
+.charge-result-grid {
+    grid-template-columns: 1fr;
+}
+
+.decoder-result-unit {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    border: 1px solid var(--color-divider-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    padding: 0.75rem;
+}
+
+.decoder-result-unit span {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.decoder-result-unit output {
+    color: var(--color-text);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.charge-result-grid .decoder-result-unit output {
+    min-width: 0;
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.decoder-result-card.has-result .decoder-result-unit output {
+    color: var(--color-primary-strong);
+}
+
+.rc-time-card {
+    display: grid;
+    gap: 0.875rem;
+    margin-top: 0.875rem;
+}
+
+.rc-input-grid,
+.rc-input-pair,
+.rc-actions {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.rc-input-pair {
+    grid-template-columns: minmax(0, 1fr) minmax(5.75rem, 0.42fr);
+    align-items: end;
+}
+
+.rc-actions .button {
+    min-height: 3rem;
+}
+
+.rc-result-grid {
+    grid-template-columns: 1fr;
+}
+
+.result-card {
+    min-height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-top: 1.25rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-muted);
+    padding: 1rem;
+}
+
+.result-label,
+.result-summary {
+    color: var(--color-text-muted);
+}
+
+.result-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.result-value {
+    color: var(--color-text);
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+.result-card.has-result .result-value {
+    color: var(--color-primary-strong);
+}
+
+.debug-list {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.debug-list li + li {
+    margin-top: 0.5rem;
+}

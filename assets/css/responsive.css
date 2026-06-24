@@ -1,0 +1,232 @@
+/* Starter responsive styles: mobile-first refinements for tablet and desktop layouts. */
+
+@media (max-width: 360px) {
+    .panel {
+        padding: 0.75rem;
+    }
+
+    .calculator-device {
+        gap: 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .calculator-input-section,
+    .calculation-history-placeholder,
+    .calculator-explanation-section {
+        gap: 0.625rem;
+        padding: 0.75rem;
+    }
+
+    .series-row {
+        gap: 0.5rem;
+        padding: 0.625rem;
+    }
+
+    .series-row-controls {
+        grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.42fr);
+        gap: 0.5rem;
+    }
+
+    .series-row-badge {
+        font-size: 0.75rem;
+    }
+
+    .series-result-card {
+        padding: 0.75rem;
+    }
+
+    .copy-result-actions {
+        justify-content: stretch;
+    }
+
+    .copy-result-button {
+        flex: 1 1 100%;
+    }
+
+    .copy-result-status {
+        width: 100%;
+        text-align: center;
+    }
+
+    .history-actions {
+        align-items: stretch;
+    }
+
+    .history-actions .button {
+        flex: 1 1 100%;
+    }
+
+    .decoder-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .charge-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .charge-result-card .copy-result-actions {
+        margin-top: 0.75rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--color-divider-subtle);
+    }
+
+    .rc-input-pair {
+        grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.42fr);
+        gap: 0.5rem;
+    }
+
+    .calculator-keypad {
+        gap: 0.45rem;
+    }
+
+    .shared-input-keypad {
+        max-width: none;
+        padding: 0.625rem;
+    }
+
+    .shared-calculator-keypad {
+        gap: 0.45rem;
+    }
+
+    .key {
+        min-height: 3.25rem;
+        font-size: 1.125rem;
+        padding-inline: 0.25rem;
+    }
+
+    .unit-row {
+        gap: 0.5rem;
+    }
+
+    .reference-toc,
+    .formula-card,
+    .formula-block,
+    .about-summary {
+        padding: 0.75rem;
+    }
+}
+
+@media (min-width: 640px) {
+    .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-actions {
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .nav-actions a,
+    .theme-toggle {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .hero-section {
+        grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    }
+
+    .calculator-device {
+        padding: 1.25rem;
+    }
+
+    .series-row-controls {
+        grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.35fr);
+    }
+
+    .series-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .code-input-row {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        align-items: end;
+    }
+
+    .decoder-result-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .charge-result-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rc-input-grid,
+    .rc-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rc-result-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .formula-reference-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .about-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 840px) {
+    .site-main {
+        padding-top: 3rem;
+    }
+
+    .calculator-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(17rem, 0.85fr);
+        align-items: start;
+    }
+
+    .notes-panel {
+        grid-column: auto;
+    }
+
+    .formula-reference-hero {
+        grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.45fr);
+    }
+
+    .about-hero {
+        grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.45fr);
+    }
+
+    .about-note {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 1080px) {
+    .calculator-grid {
+        grid-template-columns: minmax(24rem, 0.95fr) minmax(18rem, 0.55fr);
+    }
+
+    .notes-panel {
+        grid-column: auto;
+    }
+
+    .formula-reference-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

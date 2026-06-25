@@ -24,7 +24,7 @@ A static demo version is deployed on Vercel for public access using the link abo
 For now, run the project locally with XAMPP:
 
 ```text
-http://localhost/Project2-calculator/
+http://localhost/capacitance-calculator-main/
 ```
 
 ## Target Audience
@@ -96,19 +96,19 @@ http://localhost/Project2-calculator/
 3. Place this project folder here:
 
    ```text
-   C:\xampp\htdocs\Project2-calculator
+   C:\xampp\htdocs\capacitance-calculator-main
    ```
 
 4. Open the app in your browser:
 
    ```text
-   http://localhost/Project2-calculator/
+   http://localhost/capacitance-calculator-main/
    ```
 
 5. Open the Formula Reference page directly:
 
    ```text
-   http://localhost/Project2-calculator/pages/formula-reference.php
+   http://localhost/capacitance-calculator-main/pages/formula-reference.php
    ```
 
 ## How to Use the Calculator
@@ -191,13 +191,13 @@ docs/screenshots/
 It expects the local site to be available at:
 
 ```text
-http://localhost/Project2-calculator/
+http://localhost/capacitance-calculator-main/
 ```
 
 ## Folder Structure
 
 ```text
-Project2-calculator/
+capacitance-calculator-main/
 ├── index.php
 ├── README.md
 ├── package.json

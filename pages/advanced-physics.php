@@ -22,7 +22,7 @@ include __DIR__ . '/../includes/header.php';
         </p>
     </div>
 
-    <nav class="reference-toc advanced-topics-panel panel" aria-label="Advanced physics overview and topics">
+    <nav class="reference-toc advanced-topics-panel panel" id="advanced-topics" aria-label="Advanced physics overview and topics">
         <div class="about-summary advanced-topics-summary">
             <i data-lucide="graduation-cap" aria-hidden="true"></i>
             <p>
@@ -39,6 +39,11 @@ include __DIR__ . '/../includes/header.php';
         <a href="#electric-field-capacitance">Electric Field &amp; Capacitance</a>
     </nav>
 </section>
+
+<a class="button button-secondary advanced-mobile-topics-link" href="#advanced-topics">
+    <i data-lucide="list" aria-hidden="true"></i>
+    <span>Jump to Topics</span>
+</a>
 
 <section class="advanced-physics-grid" aria-label="Advanced physics topics">
     <article class="formula-card advanced-physics-card panel" id="parallel-plate-capacitor">
@@ -97,13 +102,22 @@ include __DIR__ . '/../includes/header.php';
             <h3>Interactive Calculator</h3>
             <div class="series-result-card calculator-result-display advanced-calculator-result" id="parallel-plate-result-card" aria-live="polite" aria-atomic="true">
                 <div class="series-result-header">
-                    <span class="result-label">Capacitance</span>
-                    <span class="series-result-state" id="parallel-plate-result-state">Ready</span>
+                    <span class="advanced-result-label">
+                        <i data-lucide="rectangle-horizontal" aria-hidden="true"></i>
+                        <span class="result-label">Capacitance</span>
+                    </span>
                 </div>
 
-                <output class="series-result-value advanced-primary-result" id="parallel-plate-primary-result">--</output>
+                <div class="advanced-primary-result-panel">
+                    <div class="advanced-primary-result-meta">
+                        <span class="advanced-primary-caption">Primary Result</span>
+                        <span class="series-result-state advanced-result-status" id="parallel-plate-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value advanced-primary-result" id="parallel-plate-primary-result">--</output>
+                </div>
                 <p class="result-summary" id="parallel-plate-summary">Enter plate geometry and relative permittivity to calculate capacitance.</p>
 
+                <p class="advanced-result-section-label">Other Units</p>
                 <div class="decoder-result-grid advanced-result-grid" aria-label="Capacitance results by unit">
                     <div class="decoder-result-unit">
                         <span>pF</span>
@@ -212,6 +226,13 @@ include __DIR__ . '/../includes/header.php';
                 </details>
             </section>
         </div>
+
+        <div class="advanced-back-to-topics-row">
+            <a class="button button-secondary advanced-jump-link advanced-back-to-topics" href="#advanced-topics">
+                <i data-lucide="arrow-up-circle" aria-hidden="true"></i>
+                <span>Back to Topics</span>
+            </a>
+        </div>
     </article>
 
     <article class="formula-card advanced-physics-card panel" id="cylindrical-capacitor">
@@ -270,13 +291,22 @@ include __DIR__ . '/../includes/header.php';
             <h3>Interactive Calculator</h3>
             <div class="series-result-card calculator-result-display advanced-calculator-result" id="cylindrical-result-card" aria-live="polite" aria-atomic="true">
                 <div class="series-result-header">
-                    <span class="result-label">Capacitance</span>
-                    <span class="series-result-state" id="cylindrical-result-state">Ready</span>
+                    <span class="advanced-result-label">
+                        <i data-lucide="cylinder" aria-hidden="true"></i>
+                        <span class="result-label">Capacitance</span>
+                    </span>
                 </div>
 
-                <output class="series-result-value advanced-primary-result" id="cylindrical-primary-result">--</output>
+                <div class="advanced-primary-result-panel">
+                    <div class="advanced-primary-result-meta">
+                        <span class="advanced-primary-caption">Primary Result</span>
+                        <span class="series-result-state advanced-result-status" id="cylindrical-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value advanced-primary-result" id="cylindrical-primary-result">--</output>
+                </div>
                 <p class="result-summary" id="cylindrical-summary">Enter cylindrical geometry and relative permittivity to calculate capacitance.</p>
 
+                <p class="advanced-result-section-label">Other Units</p>
                 <div class="decoder-result-grid advanced-result-grid" aria-label="Cylindrical capacitance results by unit">
                     <div class="decoder-result-unit">
                         <span>pF</span>
@@ -400,6 +430,13 @@ include __DIR__ . '/../includes/header.php';
                 </details>
             </section>
         </div>
+
+        <div class="advanced-back-to-topics-row">
+            <a class="button button-secondary advanced-jump-link advanced-back-to-topics" href="#advanced-topics">
+                <i data-lucide="arrow-up-circle" aria-hidden="true"></i>
+                <span>Back to Topics</span>
+            </a>
+        </div>
     </article>
 
     <article class="formula-card advanced-physics-card panel" id="spherical-capacitor">
@@ -458,13 +495,22 @@ include __DIR__ . '/../includes/header.php';
             <h3>Interactive Calculator</h3>
             <div class="series-result-card calculator-result-display advanced-calculator-result" id="spherical-result-card" aria-live="polite" aria-atomic="true">
                 <div class="series-result-header">
-                    <span class="result-label">Capacitance</span>
-                    <span class="series-result-state" id="spherical-result-state">Ready</span>
+                    <span class="advanced-result-label">
+                        <i data-lucide="circle" aria-hidden="true"></i>
+                        <span class="result-label">Capacitance</span>
+                    </span>
                 </div>
 
-                <output class="series-result-value advanced-primary-result" id="spherical-primary-result">--</output>
+                <div class="advanced-primary-result-panel">
+                    <div class="advanced-primary-result-meta">
+                        <span class="advanced-primary-caption">Primary Result</span>
+                        <span class="series-result-state advanced-result-status" id="spherical-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value advanced-primary-result" id="spherical-primary-result">--</output>
+                </div>
                 <p class="result-summary" id="spherical-summary">Enter spherical geometry and relative permittivity to calculate capacitance.</p>
 
+                <p class="advanced-result-section-label">Other Units</p>
                 <div class="decoder-result-grid advanced-result-grid" aria-label="Spherical capacitance results by unit">
                     <div class="decoder-result-unit">
                         <span>pF</span>
@@ -573,6 +619,13 @@ include __DIR__ . '/../includes/header.php';
                 </details>
             </section>
         </div>
+
+        <div class="advanced-back-to-topics-row">
+            <a class="button button-secondary advanced-jump-link advanced-back-to-topics" href="#advanced-topics">
+                <i data-lucide="arrow-up-circle" aria-hidden="true"></i>
+                <span>Back to Topics</span>
+            </a>
+        </div>
     </article>
 
     <article class="formula-card advanced-physics-card panel" id="dielectric-materials">
@@ -631,13 +684,22 @@ include __DIR__ . '/../includes/header.php';
             <h3>Interactive Calculator</h3>
             <div class="series-result-card calculator-result-display advanced-calculator-result" id="dielectric-result-card" aria-live="polite" aria-atomic="true">
                 <div class="series-result-header">
-                    <span class="result-label">Adjusted Capacitance</span>
-                    <span class="series-result-state" id="dielectric-result-state">Ready</span>
+                    <span class="advanced-result-label">
+                        <i data-lucide="layers" aria-hidden="true"></i>
+                        <span class="result-label">Adjusted Capacitance</span>
+                    </span>
                 </div>
 
-                <output class="series-result-value advanced-primary-result" id="dielectric-primary-result">--</output>
+                <div class="advanced-primary-result-panel">
+                    <div class="advanced-primary-result-meta">
+                        <span class="advanced-primary-caption">Primary Result</span>
+                        <span class="series-result-state advanced-result-status" id="dielectric-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value advanced-primary-result" id="dielectric-primary-result">--</output>
+                </div>
                 <p class="result-summary" id="dielectric-summary">Enter a baseline capacitance and dielectric constant to calculate the material-adjusted capacitance.</p>
 
+                <p class="advanced-result-section-label">Other Units</p>
                 <div class="decoder-result-grid advanced-result-grid" aria-label="Dielectric-adjusted capacitance results by unit">
                     <div class="decoder-result-unit">
                         <span>pF</span>
@@ -745,6 +807,13 @@ include __DIR__ . '/../includes/header.php';
                 </details>
             </section>
         </div>
+
+        <div class="advanced-back-to-topics-row">
+            <a class="button button-secondary advanced-jump-link advanced-back-to-topics" href="#advanced-topics">
+                <i data-lucide="arrow-up-circle" aria-hidden="true"></i>
+                <span>Back to Topics</span>
+            </a>
+        </div>
     </article>
 
     <article class="formula-card advanced-physics-card panel" id="electric-field-capacitance">
@@ -805,13 +874,22 @@ include __DIR__ . '/../includes/header.php';
             <h3>Interactive Calculator</h3>
             <div class="series-result-card calculator-result-display advanced-calculator-result" id="electric-field-result-card" aria-live="polite" aria-atomic="true">
                 <div class="series-result-header">
-                    <span class="result-label" id="electric-field-result-label">Electric Field</span>
-                    <span class="series-result-state" id="electric-field-result-state">Ready</span>
+                    <span class="advanced-result-label">
+                        <i data-lucide="zap" aria-hidden="true"></i>
+                        <span class="result-label" id="electric-field-result-label">Electric Field</span>
+                    </span>
                 </div>
 
-                <output class="series-result-value advanced-primary-result" id="electric-field-primary-result">--</output>
+                <div class="advanced-primary-result-panel">
+                    <div class="advanced-primary-result-meta">
+                        <span class="advanced-primary-caption">Primary Result</span>
+                        <span class="series-result-state advanced-result-status" id="electric-field-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value advanced-primary-result" id="electric-field-primary-result">--</output>
+                </div>
                 <p class="result-summary" id="electric-field-summary">Choose a mode and enter values to connect field strength, voltage, distance, charge, and capacitance.</p>
 
+                <p class="advanced-result-section-label">Other Units</p>
                 <div class="decoder-result-grid advanced-result-grid" aria-label="Electric field and capacitance results by unit">
                     <div class="decoder-result-unit" id="electric-field-result-item-1">
                         <span id="electric-field-result-unit-1">V/m</span>
@@ -945,6 +1023,13 @@ include __DIR__ . '/../includes/header.php';
                     <output id="electric-field-technical-output">Raw SI values will appear after calculation.</output>
                 </details>
             </section>
+        </div>
+
+        <div class="advanced-back-to-topics-row">
+            <a class="button button-secondary advanced-jump-link advanced-back-to-topics" href="#advanced-topics">
+                <i data-lucide="arrow-up-circle" aria-hidden="true"></i>
+                <span>Back to Topics</span>
+            </a>
         </div>
     </article>
 </section>

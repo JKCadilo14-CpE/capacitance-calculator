@@ -134,6 +134,207 @@ test.describe('Capacitance Calculator smoke', () => {
     await page.waitForTimeout(250);
   };
 
+  const advancedTopicLinks = [
+    { name: 'Parallel Plate Capacitor', card: '#parallel-plate-capacitor' },
+    { name: 'Cylindrical Capacitor', card: '#cylindrical-capacitor' },
+    { name: 'Spherical Capacitor', card: '#spherical-capacitor' },
+    { name: 'Dielectric Materials', card: '#dielectric-materials' },
+    { name: 'Electric Field & Capacitance', card: '#electric-field-capacitance' },
+  ];
+
+  const advancedUiCases = [
+    {
+      name: 'Parallel Plate Capacitor',
+      card: '#parallel-plate-capacitor',
+      panel: '#parallel-plate-calculator',
+      form: '#parallel-plate-form',
+      firstFocus: '#parallel-plate-area',
+      primaryOutput: '#parallel-plate-primary-result',
+      resultCard: '#parallel-plate-result-card',
+      copyButton: '#copy-parallel-plate-result',
+      copyStatus: '#parallel-plate-copy-status',
+      historyMode: 'advanced-parallel-plate',
+      expectedResult: '88.54 pF',
+      expectedCopyText: 'Parallel Plate Capacitor',
+      restoreSelector: '#parallel-plate-area',
+      restoreValue: '0.01',
+      fillExample: async (page) => fillParallelPlateCalculator(page, {
+        area: '0.01',
+        areaUnit: 'm2',
+        distance: '0.001',
+        distanceUnit: 'm',
+        relativePermittivity: '1',
+      }),
+    },
+    {
+      name: 'Cylindrical Capacitor',
+      card: '#cylindrical-capacitor',
+      panel: '#cylindrical-calculator',
+      form: '#cylindrical-form',
+      firstFocus: '#cylindrical-inner-radius',
+      primaryOutput: '#cylindrical-primary-result',
+      resultCard: '#cylindrical-result-card',
+      copyButton: '#copy-cylindrical-result',
+      copyStatus: '#cylindrical-copy-status',
+      historyMode: 'advanced-cylindrical',
+      expectedResult: '3.46 pF',
+      expectedCopyText: 'Cylindrical Capacitor',
+      restoreSelector: '#cylindrical-inner-radius',
+      restoreValue: '1',
+      fillExample: async (page) => fillCylindricalCalculator(page, {
+        innerRadius: '1',
+        innerRadiusUnit: 'mm',
+        outerRadius: '5',
+        outerRadiusUnit: 'mm',
+        length: '10',
+        lengthUnit: 'cm',
+        relativePermittivity: '1',
+      }),
+    },
+    {
+      name: 'Spherical Capacitor',
+      card: '#spherical-capacitor',
+      panel: '#spherical-calculator',
+      form: '#spherical-form',
+      firstFocus: '#spherical-inner-radius',
+      primaryOutput: '#spherical-primary-result',
+      resultCard: '#spherical-result-card',
+      copyButton: '#copy-spherical-result',
+      copyStatus: '#spherical-copy-status',
+      historyMode: 'advanced-spherical',
+      expectedResult: '1.39 pF',
+      expectedCopyText: 'Spherical Capacitor',
+      restoreSelector: '#spherical-inner-radius',
+      restoreValue: '1',
+      fillExample: async (page) => fillSphericalCalculator(page, {
+        innerRadius: '1',
+        innerRadiusUnit: 'cm',
+        outerRadius: '5',
+        outerRadiusUnit: 'cm',
+        relativePermittivity: '1',
+      }),
+    },
+    {
+      name: 'Dielectric Materials',
+      card: '#dielectric-materials',
+      panel: '#dielectric-calculator',
+      form: '#dielectric-form',
+      firstFocus: '#dielectric-baseline-capacitance',
+      primaryOutput: '#dielectric-primary-result',
+      resultCard: '#dielectric-result-card',
+      copyButton: '#copy-dielectric-result',
+      copyStatus: '#dielectric-copy-status',
+      historyMode: 'advanced-dielectric',
+      expectedResult: '350 pF',
+      expectedCopyText: 'Dielectric Materials',
+      restoreSelector: '#dielectric-baseline-capacitance',
+      restoreValue: '100',
+      fillExample: async (page) => {
+        await ensureAdvancedCalculatorOpen(page, '#dielectric-form');
+        await page.locator('#dielectric-material-preset').selectOption('paper');
+        await page.locator('#dielectric-baseline-capacitance').fill('100');
+        await page.locator('#dielectric-baseline-unit').selectOption('pF');
+      },
+    },
+    {
+      name: 'Electric Field & Capacitance',
+      card: '#electric-field-capacitance',
+      panel: '#electric-field-calculator',
+      form: '#electric-field-form',
+      firstFocus: '#electric-field-voltage',
+      primaryOutput: '#electric-field-primary-result',
+      resultCard: '#electric-field-result-card',
+      copyButton: '#copy-electric-field-result',
+      copyStatus: '#electric-field-copy-status',
+      historyMode: 'advanced-electric-field',
+      expectedResult: '1,200 V/m',
+      expectedCopyText: 'Electric Field & Capacitance',
+      restoreSelector: '#electric-field-voltage',
+      restoreValue: '12',
+      fillExample: async (page) => {
+        await ensureAdvancedCalculatorOpen(page, '#electric-field-form');
+        await page.locator('#electric-field-mode').selectOption('field');
+        await page.locator('#electric-field-voltage').fill('12');
+        await page.locator('#electric-field-distance').fill('0.01');
+        await page.locator('#electric-field-distance-unit').selectOption('m');
+      },
+    },
+  ];
+
+  const expectNoHorizontalOverflow = async (page) => {
+    await expect.poll(async () => page.evaluate(() => {
+      const documentElement = document.documentElement;
+      return documentElement.scrollWidth <= documentElement.clientWidth + 1;
+    })).toBeTruthy();
+  };
+
+  const expectTargetBelowStickyHeader = async (page, selector) => {
+    await expect.poll(async () => page.locator(selector).evaluate((target) => {
+      const header = document.querySelector('.site-header');
+      const bounds = target.getBoundingClientRect();
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+
+      return bounds.top >= headerBottom - 1 && bounds.top < window.innerHeight;
+    })).toBeTruthy();
+  };
+
+  const openCalculatorPanel = async (page, uiCase) => {
+    const panel = page.locator(uiCase.panel);
+    const toggleButton = page.locator(`${uiCase.card} [data-advanced-calculator-toggle]`);
+
+    if (await panel.isVisible()) {
+      return;
+    }
+
+    await expect(toggleButton).toContainText('Open Calculator');
+    await expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    await toggleButton.click();
+    await expect(panel).toBeVisible();
+    await expect(toggleButton).toContainText('Hide Calculator');
+    await expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator(uiCase.firstFocus)).toBeFocused();
+  };
+
+  const hideCalculatorPanel = async (page, uiCase) => {
+    const panel = page.locator(uiCase.panel);
+    const toggleButton = page.locator(`${uiCase.card} [data-advanced-calculator-toggle]`);
+
+    if (await panel.isHidden()) {
+      return;
+    }
+
+    await toggleButton.click();
+    await expect(panel).toBeHidden();
+    await expect(toggleButton).toContainText('Open Calculator');
+    await expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+  };
+
+  const calculateAdvancedExample = async (page, uiCase) => {
+    await openCalculatorPanel(page, uiCase);
+    await uiCase.fillExample(page);
+    await submitCalculatorForm(page, uiCase.form);
+    await expect(page.locator(uiCase.primaryOutput)).toHaveText(uiCase.expectedResult);
+  };
+
+  const installClipboardSpy = async (page) => {
+    await page.evaluate(() => {
+      window.__advancedCopiedText = '';
+
+      const clipboard = {
+        writeText: async (text) => {
+          window.__advancedCopiedText = String(text);
+        },
+      };
+
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        get: () => clipboard,
+      });
+    });
+  };
+
+  const getCopiedText = (page) => page.evaluate(() => window.__advancedCopiedText || '');
+
   test('home page loads with title and calculator mode selector', async ({ page }) => {
     const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
 
@@ -337,6 +538,151 @@ test.describe('Capacitance Calculator smoke', () => {
     });
 
     expect(electricFieldFollowsMainCalculatorPattern, 'electric field calculator layout order').toBeTruthy();
+  });
+
+  test('advanced physics topic navigation scrolls to each topic card', async ({ page }) => {
+    await visitAdvancedPhysics(page);
+
+    const topicsNav = page.locator('#advanced-topics');
+    await expect(topicsNav).toBeVisible();
+
+    for (const topic of advancedTopicLinks) {
+      const link = topicsNav.getByRole('link', { name: topic.name });
+      await expect(link).toHaveAttribute('href', topic.card);
+
+      await link.click();
+      await expect(page).toHaveURL(new RegExp(`${topic.card.slice(1)}$`));
+      await expectTargetBelowStickyHeader(page, topic.card);
+      await expect(page.locator(`${topic.card} .advanced-calculator-section`)).toBeHidden();
+    }
+  });
+
+  test('advanced physics calculator workflows expand and collapse independently', async ({ page }) => {
+    await visitAdvancedPhysics(page);
+
+    for (const uiCase of advancedUiCases) {
+      await expect(page.locator(uiCase.panel)).toBeHidden();
+      await expect(page.locator(`${uiCase.card} [data-advanced-calculator-toggle]`)).toHaveAttribute('aria-expanded', 'false');
+    }
+
+    for (const uiCase of advancedUiCases) {
+      await openCalculatorPanel(page, uiCase);
+
+      for (const otherCase of advancedUiCases) {
+        const expectation = otherCase === uiCase ? expect(page.locator(otherCase.panel)).toBeVisible() : expect(page.locator(otherCase.panel)).toBeHidden();
+        await expectation;
+      }
+
+      await hideCalculatorPanel(page, uiCase);
+    }
+  });
+
+  test('advanced physics back-to-topics links return to the topics panel', async ({ page }) => {
+    await visitAdvancedPhysics(page);
+
+    const backLinks = page.locator('.advanced-back-to-topics');
+    await expect(backLinks).toHaveCount(5);
+
+    for (let index = 0; index < advancedTopicLinks.length; index += 1) {
+      const backLink = backLinks.nth(index);
+      await expect(backLink).toHaveAttribute('href', '#advanced-topics');
+
+      await backLink.scrollIntoViewIfNeeded();
+      await backLink.click();
+      await expect(page).toHaveURL(/#advanced-topics$/);
+      await expectTargetBelowStickyHeader(page, '#advanced-topics');
+    }
+  });
+
+  test('advanced physics mobile sticky jump to topics behaves responsively', async ({ page }) => {
+    for (const width of [320, 375]) {
+      await page.setViewportSize({ width, height: 760 });
+      await visitAdvancedPhysics(page);
+
+      const stickyTopicsLink = page.locator('.advanced-mobile-topics-link');
+      await expect(stickyTopicsLink).toBeVisible();
+      await expect(stickyTopicsLink).toHaveAttribute('href', '#advanced-topics');
+      await stickyTopicsLink.focus();
+      await expect(stickyTopicsLink).toBeFocused();
+
+      await page.locator('#electric-field-capacitance').scrollIntoViewIfNeeded();
+      await stickyTopicsLink.click();
+      await expect(page).toHaveURL(/#advanced-topics$/);
+      await expectTargetBelowStickyHeader(page, '#advanced-topics');
+      await expectNoHorizontalOverflow(page);
+    }
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await visitAdvancedPhysics(page);
+    await expect(page.locator('.advanced-mobile-topics-link')).toBeHidden();
+  });
+
+  test('advanced physics result card polish remains wired after valid calculations', async ({ page }) => {
+    await visitAdvancedPhysics(page);
+    await installClipboardSpy(page);
+
+    for (const uiCase of advancedUiCases) {
+      await calculateAdvancedExample(page, uiCase);
+
+      const resultCard = page.locator(uiCase.resultCard);
+      const copyButton = page.locator(uiCase.copyButton);
+
+      await expect(resultCard.locator('.advanced-primary-caption')).toHaveText('Primary Result');
+      await expect(page.locator(uiCase.primaryOutput)).toBeVisible();
+      await expect(page.locator(uiCase.primaryOutput)).not.toHaveText('--');
+      await expect(resultCard.locator('.advanced-result-section-label')).toContainText('Other Units');
+      await expect(resultCard.locator('.advanced-result-label [aria-hidden="true"]')).toHaveCount(1);
+      await expect(copyButton).toBeEnabled();
+
+      await copyButton.click();
+      await expect(page.locator(uiCase.copyStatus)).toHaveText('Copied!');
+
+      const copiedText = await getCopiedText(page);
+      expect(copiedText).toContain(uiCase.expectedCopyText);
+      expect(copiedText).toContain(uiCase.expectedResult);
+    }
+  });
+
+  test('advanced physics hidden history restore opens the matching workflow without recalculating', async ({ page }) => {
+    await visitAdvancedPhysics(page);
+
+    for (const uiCase of advancedUiCases) {
+      await calculateAdvancedExample(page, uiCase);
+      await hideCalculatorPanel(page, uiCase);
+
+      const historyButton = page.locator(`[data-history-mode="${uiCase.historyMode}"] .history-entry-button`).first();
+      await activateControl(historyButton);
+
+      await expect(page.locator(uiCase.panel)).toBeVisible();
+      await expect(page.locator(`${uiCase.card} [data-advanced-calculator-toggle]`)).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.locator(uiCase.restoreSelector)).toHaveValue(uiCase.restoreValue);
+      await expect(page.locator(uiCase.primaryOutput)).toHaveText('--');
+      await expect(page.locator(uiCase.copyButton)).toBeDisabled();
+
+      await hideCalculatorPanel(page, uiCase);
+    }
+  });
+
+  test('advanced calculator toggles respect reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await visitAdvancedPhysics(page);
+
+    const toggleButton = page.locator('#parallel-plate-capacitor [data-advanced-calculator-toggle]');
+    const panel = page.locator('#parallel-plate-calculator');
+
+    await expect(panel).toBeHidden();
+    await toggleButton.click();
+    await expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
+    await expect(toggleButton).toContainText('Hide Calculator');
+    await expect(panel).toBeVisible();
+    await expect(page.getByLabel('Plate area A')).toBeFocused();
+    await expect(panel).not.toHaveClass(/is-expanding|is-collapsing/);
+
+    await toggleButton.click();
+    await expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggleButton).toContainText('Open Calculator');
+    await expect(panel).toBeHidden();
+    await expect(panel).not.toHaveClass(/is-expanding|is-collapsing/);
   });
 
   test('parallel plate calculator solves SI and converted-unit examples', async ({ page }) => {

@@ -1,4 +1,6 @@
 // RC time calculator script: calculates the time constant tau = R * C.
+// DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
+// This is a critical part of the calculator's functionality.
 
 const resistanceUnits = {
     ohm: {

@@ -1,4 +1,6 @@
 // Charge calculator script: calculates Q = C * V.
+// DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
+// This is a critical part of the calculator's functionality.
 
 const chargeCapacitanceUnits = {
     pF: {

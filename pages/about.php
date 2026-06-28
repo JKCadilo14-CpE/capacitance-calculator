@@ -4,6 +4,7 @@ $assetBase = '../assets';
 $homeHref = '../index.php';
 $workspaceHref = '../index.php#calculator-title';
 $formulaReferenceHref = 'formula-reference.php';
+$advancedPhysicsHref = 'advanced-physics.php';
 $aboutHref = 'about.php';
 $currentPage = 'about';
 include __DIR__ . '/../includes/header.php';

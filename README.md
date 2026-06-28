@@ -144,7 +144,7 @@ Covered topics:
 Use the **Formula Reference** link in the header navigation or open:
 
 ```text
-http://localhost/Project2-calculator/pages/formula-reference.php
+http://localhost/capacitance-calculator-main/pages/formula-reference.php
 ```
 
 ## Local History, Restore, Export, and Copy

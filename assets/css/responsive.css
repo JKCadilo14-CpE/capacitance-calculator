@@ -56,6 +56,11 @@
         flex: 1 1 100%;
     }
 
+    .advanced-technical-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.25rem;
+    }
+
     .decoder-result-grid {
         grid-template-columns: 1fr;
     }
@@ -101,8 +106,19 @@
     .reference-toc,
     .formula-card,
     .formula-block,
+    .advanced-illustration-placeholder,
+    .future-calculator-note,
+    .advanced-calculator-result,
     .about-summary {
         padding: 0.75rem;
+    }
+
+    .advanced-topics-panel {
+        gap: 0.5rem;
+    }
+
+    .advanced-topics-summary {
+        padding: 0 0 0.625rem;
     }
 }
 
@@ -174,6 +190,23 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .advanced-physics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .advanced-calculator-input-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.42fr);
+        align-items: start;
+    }
+
+    .advanced-calculator-wide-field {
+        grid-column: 1 / -1;
+    }
+
+    .advanced-result-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     .about-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -199,6 +232,14 @@
 
     .about-hero {
         grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.45fr);
+    }
+
+    .advanced-physics-hero {
+        grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.45fr);
+    }
+
+    .advanced-physics-card:last-child {
+        grid-column: 1 / -1;
     }
 
     .about-note {

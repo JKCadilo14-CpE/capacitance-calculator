@@ -1,6 +1,9 @@
 // Recent calculations history: stores successful calculator results in localStorage.
+//Each calculator mode has its own history, and the most recent 5 entries are saved.
+// DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
+// This is a critical part of the calculator's functionality.
 
-document.addEventListener('DOMContentLoaded', () => {
+const initializeHistory = () => {
     const storageKey = 'capacitanceCalculatorHistory:v1';
     const maximumEntries = 5;
     const historySections = Array.from(document.querySelectorAll('[data-history-mode]'));
@@ -298,4 +301,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderHistory();
-});
+};
+
+initializeHistory();

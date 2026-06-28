@@ -458,6 +458,246 @@ h3 {
     color: var(--color-primary-strong);
 }
 
+.advanced-physics-hero {
+    align-items: stretch;
+}
+
+.advanced-topics-panel {
+    align-content: start;
+    gap: 0.625rem;
+}
+
+.advanced-topics-summary {
+    border-bottom: 1px solid var(--color-divider-subtle);
+    padding: 0 0 0.75rem;
+}
+
+.advanced-topics-summary p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.advanced-physics-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.advanced-physics-card {
+    align-content: start;
+    scroll-margin-top: 6rem;
+}
+
+.advanced-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.advanced-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.advanced-jump-link {
+    width: fit-content;
+    text-decoration: none;
+}
+
+.advanced-calculator-toggle {
+    max-width: 100%;
+    cursor: pointer;
+    white-space: normal;
+}
+
+.advanced-calculator-toggle span {
+    overflow-wrap: anywhere;
+}
+
+.advanced-calculator-toggle[aria-expanded="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-surface-muted);
+    color: var(--color-primary-strong);
+}
+
+.difficulty-badge {
+    min-height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.55rem;
+    text-transform: uppercase;
+}
+
+.difficulty-badge-intermediate {
+    border-color: var(--color-success-border);
+    color: var(--color-primary-strong);
+}
+
+.difficulty-badge-advanced {
+    border-color: var(--color-display-border);
+    background: var(--color-input-background);
+    color: var(--color-result-accent);
+}
+
+.advanced-illustration-placeholder {
+    min-height: 9rem;
+    display: grid;
+    place-items: center;
+    gap: 0.75rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    padding: 1rem;
+    text-align: center;
+}
+
+.advanced-illustration-placeholder svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-primary);
+}
+
+.advanced-illustration-placeholder span {
+    max-width: 28ch;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.advanced-applications {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--color-text-muted);
+}
+
+.advanced-applications li::marker {
+    color: var(--color-primary);
+}
+
+.future-calculator-note {
+    border-color: var(--color-success-border);
+    border-top: 1px solid var(--color-success-border);
+    border-radius: var(--radius-md);
+    background: var(--color-success-surface);
+    padding: 0.875rem;
+}
+
+.advanced-calculator-section {
+    gap: 0.875rem;
+    scroll-margin-top: 6rem;
+}
+
+.advanced-calculator-form {
+    display: grid;
+    gap: 0.875rem;
+    margin: 0;
+}
+
+.advanced-calculator-input-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.advanced-calculator-result {
+    min-height: auto;
+    margin-top: 0;
+    text-align: left;
+}
+
+.advanced-primary-result {
+    display: block;
+    color: var(--color-result-accent);
+    text-align: right;
+}
+
+.advanced-result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.advanced-recent-calculations {
+    margin: 0;
+}
+
+.advanced-recent-calculations .history-entry-calculation {
+    font-size: 1rem;
+}
+
+.advanced-breakdown {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    text-align: left;
+}
+
+.advanced-solution-section {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.advanced-solution-heading {
+    margin: 0;
+    color: var(--color-primary-strong);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.advanced-solution-line {
+    margin: 0;
+    color: var(--color-text);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#parallel-plate-technical-output,
+#cylindrical-technical-output,
+#spherical-technical-output,
+#dielectric-technical-output,
+#electric-field-technical-output {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.advanced-technical-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 0.75rem;
+    align-items: start;
+    border-top: 1px solid var(--color-divider-subtle);
+    padding-top: 0.5rem;
+}
+
+.advanced-technical-label {
+    color: var(--color-text-muted);
+    font-weight: 700;
+}
+
+.advanced-technical-value {
+    color: var(--color-text);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    overflow-wrap: anywhere;
+}
+
+.advanced-copy-actions {
+    justify-content: flex-start;
+    border-top: 1px solid var(--color-divider-subtle);
+    padding-top: 0.5rem;
+}
+
 .about-hero {
     align-items: stretch;
 }

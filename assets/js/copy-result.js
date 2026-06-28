@@ -1,4 +1,6 @@
 // Copy result controls: copies the latest successful calculator result only.
+// DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
+// This is a critical part of the calculator's functionality.
 
 document.addEventListener('DOMContentLoaded', () => {
     const modeTitles = {

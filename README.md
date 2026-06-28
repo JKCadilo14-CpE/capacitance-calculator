@@ -1,16 +1,27 @@
 # Capacitance Calculator
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![PHP](https://img.shields.io/badge/PHP-XAMPP%20%2F%20Apache-777BB4)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
-A responsive, browser-based capacitance calculator suite for electronics students, hobbyists, makers, and beginners learning capacitor math. Built with plain PHP, HTML, CSS, and vanilla JavaScript, the project combines practical calculator modes with a beginner-friendly Formula Reference page, local calculation history, export tools, copyable results, and a mobile-first interface.
+A responsive, browser-based capacitance calculator suite for electronics students, hobbyists, makers, and beginners learning capacitor math. Built with plain PHP, HTML, CSS, and vanilla JavaScript, the project combines practical capacitor calculators, a beginner-friendly Formula Reference page, an Advanced Physics page, local history/export/copy tools, and a mobile-first interface.
 
 ## Project Status
 
-**Current version:** `v1.0.0`
+**Current version:** `v2.0.0`
 
 This project is a working educational/reference calculator suite. It runs locally with XAMPP and stores calculator history in the browser using `localStorage`. It does not use PHP sessions, MySQL, Composer, or a backend database yet.
+
+## What's New in v2.0.0
+
+- Added an Advanced Physics page for capacitor theory and geometry calculators
+- Added five advanced capacitance calculators
+- Modularized the Advanced Physics JavaScript files
+- Added collapsible calculator workflows
+- Added Jump to Topics navigation
+- Added mobile navigation improvements for long Advanced Physics sections
+- Expanded Playwright UI regression coverage
+- Improved Advanced Physics result card presentation
 
 ## Live Demo
 
@@ -38,6 +49,7 @@ http://localhost/capacitance-calculator-main/
 ## Feature Highlights
 
 - **Seven calculator modes** in one clean interface
+- **Advanced Physics section** with five additional theory-focused calculators
 - **Mobile-friendly calculator controls** with a dedicated Unit Converter keypad and shared numeric keypad
 - **Formula breakdowns and technical details** for supported calculator modes
 - **Recent Calculations history** stored locally per calculator mode
@@ -46,8 +58,14 @@ http://localhost/capacitance-calculator-main/
 - **Copy Result buttons** for sharing a short input summary and final result
 - **Dark/light theme toggle** with saved browser preference
 - **Formula Reference page** written for electronics beginners
+- **Jump to Topics navigation** on long reference and Advanced Physics pages
+- **Collapsible Advanced Physics workflows** so educational content stays easy to scan
+- **Improved Advanced Physics result cards** with clearer primary results and secondary units
+- **Mobile sticky Jump to Topics button** on the Advanced Physics page
+- **Modular Advanced Physics JavaScript** under `assets/js/advanced/`
 - **Responsive design** for phones, tablets, and desktop screens
 - **Playwright screenshot automation** for GitHub-ready project images
+- **Expanded Playwright UI tests** for Advanced Physics navigation, collapse behavior, history restore, copy, and responsive checks
 
 ## Calculator Modes
 
@@ -60,6 +78,20 @@ http://localhost/capacitance-calculator-main/
 | **RC Time Constant** | Calculates `τ = R × C` using resistance and capacitance values. |
 | **Charge Calculator** | Calculates stored charge with `Q = C × V` and shows results in `C`, `mC`, `µC`, and `nC`. |
 | **Energy Stored** | Calculates capacitor energy with `E = 1/2 × C × V²` and shows results in `J`, `mJ`, and `µJ`. |
+
+## Advanced Physics
+
+The Advanced Physics page keeps the main calculator focused on practical electronics while adding capacitor theory tools for students studying electromagnetics and physics.
+
+| Topic | What It Covers |
+| --- | --- |
+| **Parallel Plate Capacitor** | Calculates `C = εA / d` using plate area, separation distance, and relative permittivity. |
+| **Cylindrical Capacitor** | Calculates `C = 2π ε L / ln(b/a)` for coaxial and cylindrical conductor models. |
+| **Spherical Capacitor** | Calculates `C = 4π εab / (b - a)` for concentric spherical conductors. |
+| **Dielectric Materials** | Shows how dielectric constant changes capacitance using `ε = κ × ε0` and `C = κ × C0`. |
+| **Electric Field & Capacitance** | Solves electric field, voltage, distance, and capacitance relationships with `E = V / d` and `C = Q / V`. |
+
+Each topic card includes theory, formula, applications, an interactive calculator workflow, a worked solution, technical details, local history, copy result, restore, and TXT/CSV export tools. Topic navigation, Back to Topics links, and collapsible calculator sections make the page easier to use on phones.
 
 ## Screenshots
 
@@ -78,12 +110,14 @@ http://localhost/capacitance-calculator-main/
 ### Formula Reference
 ![Formula Reference](docs/screenshots/formula-reference.png)
 
+Advanced Physics screenshots are not included yet. They should be added in a future screenshot refresh.
+
 ## Technologies Used
 
 - **PHP** for shared page includes and plain XAMPP routing
 - **HTML5** for semantic page structure
 - **CSS3** with custom properties for responsive design and dark/light themes
-- **Vanilla JavaScript** for calculator behavior and browser storage
+- **Vanilla JavaScript** for calculator behavior, modular Advanced Physics scripts, and browser storage
 - **Lucide Icons** via CDN
 - **localStorage** for local history and theme preference
 - **XAMPP / Apache** for local PHP development
@@ -99,7 +133,7 @@ http://localhost/capacitance-calculator-main/
    C:\xampp\htdocs\capacitance-calculator-main
    ```
 
-4. Open the app in your browser:
+4. Open the Home page in your browser:
 
    ```text
    http://localhost/capacitance-calculator-main/
@@ -109,6 +143,12 @@ http://localhost/capacitance-calculator-main/
 
    ```text
    http://localhost/capacitance-calculator-main/pages/formula-reference.php
+   ```
+
+6. Open the Advanced Physics page directly:
+
+   ```text
+   http://localhost/capacitance-calculator-main/pages/advanced-physics.php
    ```
 
 ## How to Use the Calculator
@@ -149,7 +189,7 @@ http://localhost/capacitance-calculator-main/pages/formula-reference.php
 
 ## Local History, Restore, Export, and Copy
 
-Recent calculations are stored locally in the browser for each calculator mode. The app keeps the latest five entries per mode.
+Recent calculations are stored locally in the browser for each supported calculator mode, including Advanced Physics calculators. The app keeps the latest five entries per mode.
 
 - **Restore**: Refill previous inputs without auto-calculating.
 - **Export TXT**: Download readable history entries for the current mode.
@@ -168,6 +208,7 @@ The interface is designed mobile-first:
 - Shared keypads reduce reliance on the phone keyboard.
 - History, export, and copy controls wrap to avoid horizontal scrolling.
 - Result cards prioritize the main answer and keep secondary values readable.
+- Advanced Physics topic links and collapsible calculator workflows reduce long-page scrolling.
 
 ## Dark/Light Theme
 
@@ -200,6 +241,7 @@ http://localhost/capacitance-calculator-main/
 capacitance-calculator-main/
 ├── index.php
 ├── README.md
+├── package-lock.json
 ├── package.json
 ├── playwright.config.js
 │
@@ -209,6 +251,17 @@ capacitance-calculator-main/
 │   │   ├── calculator.css
 │   │   └── responsive.css
 │   └── js/
+│       ├── advanced/
+│       │   ├── advanced-calculator-toggle.js
+│       │   ├── advanced-index.js
+│       │   ├── advanced-utils.js
+│       │   ├── cylindrical.js
+│       │   ├── dielectric.js
+│       │   ├── electric-field.js
+│       │   ├── package.json
+│       │   ├── parallel-plate.js
+│       │   └── spherical.js
+│       ├── advanced-physics.js
 │       ├── main.js
 │       ├── capacitance-calculator.js
 │       ├── capacitor-code-decoder.js
@@ -236,42 +289,44 @@ capacitance-calculator-main/
 │
 ├── pages/
 │   ├── about.php
+│   ├── advanced-physics.php
 │   └── formula-reference.php
 │
 ├── scripts/
 │   └── capture-screenshots.js
 │
 └── tests/
-    └── example.spec.js
+    └── calculator-smoke.spec.js
 ```
 
-## Version
+## Version History
 
-### v1.0.0
+### v2.0.0 – Advanced Physics Update
 
-Initial complete calculator suite with:
+- Added the Advanced Physics page
+- Added five Advanced Physics calculators
+- Added topic navigation, collapsible workflows, and mobile navigation improvements
+- Modularized the Advanced Physics JavaScript files
+- Expanded Playwright UI regression coverage
 
-- Seven calculator modes
+### v1.0.0 – Initial complete calculator suite
+
+- Seven practical calculator modes
 - Formula Reference page
 - About page
 - Dark/light theme
-- Local calculation history
-- History restore
-- TXT/CSV history export
-- Copy Result buttons
+- Local calculation history, restore, TXT/CSV export, and Copy Result buttons
 - Shared numeric keypad
 - Screenshot automation
 
 ## Roadmap
 
-- PWA support with offline caching and install prompt
-- More automated tests for calculator edge cases
-- Better saved-history management
-- Optional user-selectable result units for Series and Parallel modes
 - Capacitive reactance calculator
-- Tolerance support for capacitor code decoding
-- Printable Formula Reference page
-- Optional deployment for a public live demo
+- RC filter tools
+- Printable formula and Advanced Physics references
+- Accessibility improvements
+- More automated tests for calculator edge cases
+- Advanced Physics screenshots for the README
 
 ## Contributing
 

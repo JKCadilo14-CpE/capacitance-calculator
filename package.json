@@ -1,6 +1,6 @@
 {
   "name": "project2-calculator",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A responsive PHP and JavaScript capacitance calculator for electronics students, hobbyists, and circuit reference workflows.",
   "scripts": {
     "test:e2e": "playwright test",

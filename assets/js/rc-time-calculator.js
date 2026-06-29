@@ -8,8 +8,6 @@ const rcCapacitanceUnits = window.PracticalCalculatorUtils.units.capacitance;
 
 const timeUnits = window.PracticalCalculatorUtils.units.time;
 
-const normalizeRcValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
-
 const formatRcNumber = (value, maximumFractionDigits = 6) => {
     return window.PracticalCalculatorUtils.formatPrecisionNumber(value, maximumFractionDigits);
 };
@@ -43,35 +41,7 @@ const getReadableTime = (seconds) => {
 };
 
 const parsePositiveRcValue = (input, label) => {
-    const normalizedValue = normalizeRcValue(input.value);
-
-    if (!normalizedValue) {
-        return {
-            isValid: false,
-            message: `Enter a ${label.toLowerCase()} value.`,
-        };
-    }
-
-    const numericValue = Number(normalizedValue);
-
-    if (!Number.isFinite(numericValue)) {
-        return {
-            isValid: false,
-            message: `${label} must be a valid number.`,
-        };
-    }
-
-    if (numericValue <= 0) {
-        return {
-            isValid: false,
-            message: `${label} must be greater than zero.`,
-        };
-    }
-
-    return {
-        isValid: true,
-        value: numericValue,
-    };
+    return window.PracticalCalculatorUtils.parseNumericInputValue(input, label);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -96,20 +66,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const clearError = () => {
-        errorElement.textContent = '';
-        resistanceInput.removeAttribute('aria-invalid');
-        capacitanceInput.removeAttribute('aria-invalid');
+        window.PracticalCalculatorUtils.clearInputErrorState(errorElement, [
+            resistanceInput,
+            capacitanceInput,
+        ]);
     };
 
     const clearResult = () => {
-        resultCard.classList.remove('has-result');
-        resultStateElement.textContent = 'Ready';
-        primaryResultElement.textContent = '--';
-        summaryElement.textContent = 'Enter resistance and capacitance to calculate τ.';
-        secondsElement.textContent = '--';
-        millisecondsElement.textContent = '--';
-        microsecondsElement.textContent = '--';
-        breakdownElement.textContent = 'Formula: τ = R × C.';
+        window.PracticalCalculatorUtils.clearResultState({
+            resultCard,
+            resultStateElement,
+            primaryResultElement,
+            summaryElement,
+            outputElements: [
+                secondsElement,
+                millisecondsElement,
+                microsecondsElement,
+            ],
+            breakdownElement,
+            summaryText: 'Enter resistance and capacitance to calculate τ.',
+            breakdownText: 'Formula: τ = R × C.',
+        });
     };
 
     const resetCalculator = () => {
@@ -122,10 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showError = (input, message) => {
-        input.setAttribute('aria-invalid', 'true');
-        errorElement.textContent = message;
-        clearResult();
-        input.focus();
+        window.PracticalCalculatorUtils.showInputError({
+            input,
+            errorElement,
+            message,
+            clearResult,
+        });
     };
 
     const calculateRcTime = () => {
@@ -181,15 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateRcTime();
     });
 
-    [resistanceInput, capacitanceInput, resistanceUnitSelect, capacitanceUnitSelect].forEach((control) => {
-        control.addEventListener('input', () => {
-            clearError();
-            clearResult();
-        });
-        control.addEventListener('change', () => {
-            clearError();
-            clearResult();
-        });
+    window.PracticalCalculatorUtils.bindResultResetListeners([
+        resistanceInput,
+        capacitanceInput,
+        resistanceUnitSelect,
+        capacitanceUnitSelect,
+    ], () => {
+        clearError();
+        clearResult();
     });
 
     clearButton.addEventListener('click', () => {
@@ -204,9 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const restoreData = event.detail.restoreData || {};
         resistanceInput.value = String(restoreData.resistanceValue ?? '');
-        resistanceUnitSelect.value = resistanceUnits[restoreData.resistanceUnit] ? restoreData.resistanceUnit : 'kohm';
+        resistanceUnitSelect.value = window.PracticalCalculatorUtils.getSupportedUnitKey(resistanceUnits, restoreData.resistanceUnit, 'kohm');
         capacitanceInput.value = String(restoreData.capacitanceValue ?? '');
-        capacitanceUnitSelect.value = rcCapacitanceUnits[restoreData.capacitanceUnit] ? restoreData.capacitanceUnit : 'uF';
+        capacitanceUnitSelect.value = window.PracticalCalculatorUtils.getSupportedUnitKey(rcCapacitanceUnits, restoreData.capacitanceUnit, 'uF');
         clearError();
         clearResult();
         resistanceInput.focus();

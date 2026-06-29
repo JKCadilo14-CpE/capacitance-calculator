@@ -273,8 +273,14 @@ window.PracticalCalculatorUtils = (() => {
             outputElement.textContent = '--';
         });
         breakdownElement.textContent = breakdownText;
-        technicalOutputElement.textContent = technicalText;
-        technicalDetailsElement.open = false;
+
+        if (technicalOutputElement) {
+            technicalOutputElement.textContent = technicalText;
+        }
+
+        if (technicalDetailsElement) {
+            technicalDetailsElement.open = false;
+        }
     };
 
     const resetCapacitanceVoltageFields = ({

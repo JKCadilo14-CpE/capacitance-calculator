@@ -137,20 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
         form.classList.add('has-result');
         resultElement.textContent = `${formattedResult} ${capacitanceUnits[toUnit].label}`;
         summaryElement.textContent = `${formattedInput} ${capacitanceUnits[fromUnit].label} equals ${formattedResult} ${capacitanceUnits[toUnit].label}.`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'unit-converter',
-                modeName: 'Unit Converter',
-                inputSummary: `${formattedInput} ${capacitanceUnits[fromUnit].label}`,
-                result: `${formattedResult} ${capacitanceUnits[toUnit].label}`,
-                restoreData: {
-                    value: inputValue,
-                    fromUnit,
-                    toUnit,
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'unit-converter',
+            modeName: 'Unit Converter',
+            inputSummary: `${formattedInput} ${capacitanceUnits[fromUnit].label}`,
+            result: `${formattedResult} ${capacitanceUnits[toUnit].label}`,
+            restoreData: {
+                value: inputValue,
+                fromUnit,
+                toUnit,
             },
-        }));
+        });
     };
 
     const swapUnits = () => {

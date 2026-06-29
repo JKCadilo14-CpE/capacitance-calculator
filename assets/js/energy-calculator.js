@@ -142,20 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
         microjoulesElement.textContent = `${formatEnergyNumber(microjoules, 4)} ${energyUnits.uJ.label}`;
         breakdownElement.textContent = `E = 1/2 × C × V². E = 0.5 × ${formatEnergyNumber(capacitanceFarads, 8)} ${energyCapacitanceUnits.F.label} × ${formatEnergyNumber(voltage, 4)}² = ${formattedJoules} ${energyUnits.J.label}.`;
         technicalOutputElement.textContent = `Capacitance: ${formatEnergyNumber(capacitanceFarads, 8)} ${energyCapacitanceUnits.F.label} · Voltage: ${formatEnergyNumber(voltage, 4)} ${energyVoltageUnits.V.label} · Raw energy: ${formattedJoules} ${energyUnits.J.label}`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'energy-stored',
-                modeName: 'Energy Stored',
-                inputSummary: `${formatEnergyNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatEnergyNumber(voltage, 4)} ${energyVoltageUnits.V.label}`,
-                result: `${formattedJoules} ${energyUnits.J.label}`,
-                restoreData: {
-                    capacitanceValue: capacitanceInput.value.trim(),
-                    capacitanceUnit: capacitanceUnitSelect.value,
-                    voltageValue: voltageInput.value.trim(),
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'energy-stored',
+            modeName: 'Energy Stored',
+            inputSummary: `${formatEnergyNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatEnergyNumber(voltage, 4)} ${energyVoltageUnits.V.label}`,
+            result: `${formattedJoules} ${energyUnits.J.label}`,
+            restoreData: {
+                capacitanceValue: capacitanceInput.value.trim(),
+                capacitanceUnit: capacitanceUnitSelect.value,
+                voltageValue: voltageInput.value.trim(),
             },
-        }));
+        });
     };
 
     form.addEventListener('submit', (event) => {

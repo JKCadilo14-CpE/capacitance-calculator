@@ -190,7 +190,29 @@ window.PracticalCalculatorUtils = (() => {
         return formatPrecisionNumber(value, absoluteValue >= 1 ? 4 : 8);
     };
 
+    const createHistoryEntry = ({
+        mode,
+        modeName,
+        inputSummary,
+        result,
+        restoreData,
+    }) => ({
+        mode,
+        modeName,
+        inputSummary,
+        result,
+        restoreData,
+        timestamp: Date.now(),
+    });
+
+    const dispatchHistoryEntry = (entry) => {
+        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
+            detail: createHistoryEntry(entry),
+        }));
+    };
+
     return Object.freeze({
+        dispatchHistoryEntry,
         formatDecodedNumber,
         formatPrecisionNumber,
         formatRoundedNumber,

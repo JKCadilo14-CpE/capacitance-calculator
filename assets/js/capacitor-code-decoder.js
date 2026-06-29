@@ -149,18 +149,15 @@ document.addEventListener('DOMContentLoaded', () => {
         resultElements.uF.textContent = `${formatDecodedValue(values.uF)} µF`;
         resultElements.F.textContent = `${formatDecodedValue(values.F)} F`;
         breakdownElement.textContent = `${parsedCode.code}: ${parsedCode.significantFigures} × 10^${parsedCode.multiplier} pF = ${formatDecodedValue(parsedCode.valueInPf, { forceInteger: true })} pF.`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'code-decoder',
-                modeName: 'Code Decoder',
-                inputSummary: parsedCode.code,
-                result: `${formatDecodedValue(readableValue)} ${codeDecoderUnits[readableUnit].label}`,
-                restoreData: {
-                    code: parsedCode.code,
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'code-decoder',
+            modeName: 'Code Decoder',
+            inputSummary: parsedCode.code,
+            result: `${formatDecodedValue(readableValue)} ${codeDecoderUnits[readableUnit].label}`,
+            restoreData: {
+                code: parsedCode.code,
             },
-        }));
+        });
     };
 
     form.addEventListener('submit', (event) => {

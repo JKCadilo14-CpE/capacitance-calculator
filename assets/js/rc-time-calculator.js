@@ -162,21 +162,18 @@ document.addEventListener('DOMContentLoaded', () => {
         millisecondsElement.textContent = `${formatRcNumber(milliseconds, 4)} ${timeUnits.ms.label}`;
         microsecondsElement.textContent = `${formatRcNumber(microseconds, 2)} ${timeUnits.us.label}`;
         breakdownElement.textContent = `τ = R × C. τ = ${formatRcNumber(resistanceOhms, 2)} ${resistanceUnits.ohm.label} × ${formatRcNumber(capacitanceFarads, 8)} ${rcCapacitanceUnits.F.label} = ${formatRcNumber(seconds, 8)} ${timeUnits.s.label}.`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'rc-time',
-                modeName: 'RC Time',
-                inputSummary: `${formatRcNumber(parsedResistance.value, 2)} ${resistanceUnit.label} × ${formatRcNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}`,
-                result: `${formatRcNumber(readableTime.value)} ${readableTime.unit}`,
-                restoreData: {
-                    resistanceValue: resistanceInput.value.trim(),
-                    resistanceUnit: resistanceUnitSelect.value,
-                    capacitanceValue: capacitanceInput.value.trim(),
-                    capacitanceUnit: capacitanceUnitSelect.value,
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'rc-time',
+            modeName: 'RC Time',
+            inputSummary: `${formatRcNumber(parsedResistance.value, 2)} ${resistanceUnit.label} × ${formatRcNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}`,
+            result: `${formatRcNumber(readableTime.value)} ${readableTime.unit}`,
+            restoreData: {
+                resistanceValue: resistanceInput.value.trim(),
+                resistanceUnit: resistanceUnitSelect.value,
+                capacitanceValue: capacitanceInput.value.trim(),
+                capacitanceUnit: capacitanceUnitSelect.value,
             },
-        }));
+        });
     };
 
     form.addEventListener('submit', (event) => {

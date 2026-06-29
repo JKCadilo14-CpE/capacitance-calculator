@@ -309,23 +309,20 @@ document.addEventListener('DOMContentLoaded', () => {
         summaryElement.textContent = `Calculated from ${parsedValues.values.length} capacitors.`;
         breakdownElement.textContent = `1/Ct = ${formulaLabels}. ${reciprocalTerms}.`;
         rawFaradsElement.textContent = `Raw total: ${formattedFarads} F`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'series',
-                modeName: 'Series',
-                inputSummary: parsedValues.values
-                    .map((capacitor) => `${formatSeriesNumber(capacitor.value)} ${seriesUnits[capacitor.unit].label}`)
-                    .join(', '),
-                result: `${formattedReadableValue} ${seriesUnits[readableUnit].label}`,
-                restoreData: {
-                    capacitors: parsedValues.values.map((capacitor) => ({
-                        value: capacitor.inputValue,
-                        unit: capacitor.unit,
-                    })),
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'series',
+            modeName: 'Series',
+            inputSummary: parsedValues.values
+                .map((capacitor) => `${formatSeriesNumber(capacitor.value)} ${seriesUnits[capacitor.unit].label}`)
+                .join(', '),
+            result: `${formattedReadableValue} ${seriesUnits[readableUnit].label}`,
+            restoreData: {
+                capacitors: parsedValues.values.map((capacitor) => ({
+                    value: capacitor.inputValue,
+                    unit: capacitor.unit,
+                })),
             },
-        }));
+        });
     };
 
     const restoreSeriesHistory = (restoreData) => {
@@ -603,23 +600,20 @@ document.addEventListener('DOMContentLoaded', () => {
         parallelSummaryElement.textContent = `Calculated from ${parsedValues.values.length} capacitors.`;
         parallelBreakdownElement.textContent = `Ct = ${formulaLabels}. ${additionTerms}.`;
         parallelRawFaradsElement.textContent = `Raw total: ${formattedFarads} F`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'parallel',
-                modeName: 'Parallel',
-                inputSummary: parsedValues.values
-                    .map((capacitor) => `${formatSeriesNumber(capacitor.value)} ${seriesUnits[capacitor.unit].label}`)
-                    .join(', '),
-                result: `${formattedReadableValue} ${seriesUnits[readableUnit].label}`,
-                restoreData: {
-                    capacitors: parsedValues.values.map((capacitor) => ({
-                        value: capacitor.inputValue,
-                        unit: capacitor.unit,
-                    })),
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'parallel',
+            modeName: 'Parallel',
+            inputSummary: parsedValues.values
+                .map((capacitor) => `${formatSeriesNumber(capacitor.value)} ${seriesUnits[capacitor.unit].label}`)
+                .join(', '),
+            result: `${formattedReadableValue} ${seriesUnits[readableUnit].label}`,
+            restoreData: {
+                capacitors: parsedValues.values.map((capacitor) => ({
+                    value: capacitor.inputValue,
+                    unit: capacitor.unit,
+                })),
             },
-        }));
+        });
     };
 
     const restoreParallelHistory = (restoreData) => {

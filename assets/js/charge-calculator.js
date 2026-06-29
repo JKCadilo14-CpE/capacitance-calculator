@@ -143,20 +143,17 @@ document.addEventListener('DOMContentLoaded', () => {
         nanocoulombsElement.textContent = `${formatChargeNumber(nanocoulombs, 2)} ${chargeUnits.nC.label}`;
         breakdownElement.textContent = `Q = C × V. Q = ${formatChargeNumber(capacitanceFarads, 8)} ${chargeCapacitanceUnits.F.label} × ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label} = ${formattedCoulombs} ${chargeUnits.C.label}.`;
         technicalOutputElement.textContent = `Capacitance: ${formatChargeNumber(capacitanceFarads, 8)} ${chargeCapacitanceUnits.F.label} · Voltage: ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label} · Raw charge: ${formattedCoulombs} ${chargeUnits.C.label}`;
-        document.dispatchEvent(new CustomEvent('calculator:history-entry', {
-            detail: {
-                mode: 'charge-calculator',
-                modeName: 'Charge Calculator',
-                inputSummary: `${formatChargeNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label}`,
-                result: `${formattedCoulombs} ${chargeUnits.C.label}`,
-                restoreData: {
-                    capacitanceValue: capacitanceInput.value.trim(),
-                    capacitanceUnit: capacitanceUnitSelect.value,
-                    voltageValue: voltageInput.value.trim(),
-                },
-                timestamp: Date.now(),
+        window.PracticalCalculatorUtils.dispatchHistoryEntry({
+            mode: 'charge-calculator',
+            modeName: 'Charge Calculator',
+            inputSummary: `${formatChargeNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label}`,
+            result: `${formattedCoulombs} ${chargeUnits.C.label}`,
+            restoreData: {
+                capacitanceValue: capacitanceInput.value.trim(),
+                capacitanceUnit: capacitanceUnitSelect.value,
+                voltageValue: voltageInput.value.trim(),
             },
-        }));
+        });
     };
 
     form.addEventListener('submit', (event) => {

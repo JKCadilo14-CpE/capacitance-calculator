@@ -87,20 +87,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const clearError = () => {
-        input.removeAttribute('aria-invalid');
-        errorElement.textContent = '';
+        window.PracticalCalculatorUtils.clearInputErrorState(errorElement, [input]);
+    };
+
+    const resetResultCard = (summaryText, breakdownText) => {
+        window.PracticalCalculatorUtils.clearResultState({
+            resultCard,
+            resultStateElement: stateElement,
+            primaryResultElement,
+            summaryElement,
+            outputElements: Object.values(resultElements),
+            breakdownElement,
+            summaryText,
+            breakdownText,
+        });
     };
 
     const clearDecodedResult = () => {
         clearError();
-        resultCard.classList.remove('has-result');
-        stateElement.textContent = 'Ready';
-        primaryResultElement.textContent = '--';
-        summaryElement.textContent = 'Enter a 3-digit code to decode its capacitance.';
-        breakdownElement.textContent = 'Example: 104 means 10 × 10^4 pF.';
-        Object.values(resultElements).forEach((element) => {
-            element.textContent = '--';
-        });
+        resetResultCard(
+            'Enter a 3-digit code to decode its capacitance.',
+            'Example: 104 means 10 × 10^4 pF.',
+        );
     };
 
     const resetDecoder = () => {
@@ -109,17 +117,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showError = (message) => {
-        input.setAttribute('aria-invalid', 'true');
-        errorElement.textContent = message;
-        resultCard.classList.remove('has-result');
-        stateElement.textContent = 'Ready';
-        primaryResultElement.textContent = '--';
-        summaryElement.textContent = 'Fix the code and try again.';
-        breakdownElement.textContent = 'Use exactly three digits: first two significant figures, third digit multiplier.';
-        Object.values(resultElements).forEach((element) => {
-            element.textContent = '--';
+        window.PracticalCalculatorUtils.showInputError({
+            input,
+            errorElement,
+            message,
+            clearResult: () => {
+                resetResultCard(
+                    'Fix the code and try again.',
+                    'Use exactly three digits: first two significant figures, third digit multiplier.',
+                );
+            },
         });
-        input.focus();
     };
 
     const decodeCode = () => {

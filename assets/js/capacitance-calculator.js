@@ -2,24 +2,7 @@
 // DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
 // This is a critical part of the calculator's functionality.
 
-const seriesUnits = {
-    pF: {
-        label: 'pF',
-        factor: 1e-12,
-    },
-    nF: {
-        label: 'nF',
-        factor: 1e-9,
-    },
-    uF: {
-        label: 'µF',
-        factor: 1e-6,
-    },
-    F: {
-        label: 'F',
-        factor: 1,
-    },
-};
+const seriesUnits = window.PracticalCalculatorUtils.units.capacitance;
 
 const minimumSeriesRows = 2;
 const minimumParallelRows = 2;

@@ -2,39 +2,11 @@
 // DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
 // This is a critical part of the calculator's functionality.
 
-const resistanceUnits = {
-    ohm: {
-        label: 'Ω',
-        factor: 1,
-    },
-    kohm: {
-        label: 'kΩ',
-        factor: 1e3,
-    },
-    mohm: {
-        label: 'MΩ',
-        factor: 1e6,
-    },
-};
+const resistanceUnits = window.PracticalCalculatorUtils.units.resistance;
 
-const rcCapacitanceUnits = {
-    pF: {
-        label: 'pF',
-        factor: 1e-12,
-    },
-    nF: {
-        label: 'nF',
-        factor: 1e-9,
-    },
-    uF: {
-        label: 'µF',
-        factor: 1e-6,
-    },
-    F: {
-        label: 'F',
-        factor: 1,
-    },
-};
+const rcCapacitanceUnits = window.PracticalCalculatorUtils.units.capacitance;
+
+const timeUnits = window.PracticalCalculatorUtils.units.time;
 
 const normalizeRcValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
 
@@ -46,27 +18,27 @@ const getReadableTime = (seconds) => {
     if (seconds >= 1) {
         return {
             value: seconds,
-            unit: 's',
+            unit: timeUnits.s.label,
         };
     }
 
     if (seconds >= 0.001) {
         return {
-            value: seconds * 1e3,
-            unit: 'ms',
+            value: seconds / timeUnits.ms.factor,
+            unit: timeUnits.ms.label,
         };
     }
 
     if (seconds >= 0.000001) {
         return {
-            value: seconds * 1e6,
-            unit: 'µs',
+            value: seconds / timeUnits.us.factor,
+            unit: timeUnits.us.label,
         };
     }
 
     return {
         value: seconds,
-        unit: 's',
+        unit: timeUnits.s.label,
     };
 };
 
@@ -178,18 +150,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const resistanceOhms = parsedResistance.value * resistanceUnit.factor;
         const capacitanceFarads = parsedCapacitance.value * capacitanceUnit.factor;
         const seconds = resistanceOhms * capacitanceFarads;
-        const milliseconds = seconds * 1e3;
-        const microseconds = seconds * 1e6;
+        const milliseconds = seconds / timeUnits.ms.factor;
+        const microseconds = seconds / timeUnits.us.factor;
         const readableTime = getReadableTime(seconds);
 
         resultCard.classList.add('has-result');
         resultStateElement.textContent = 'Calculated';
         primaryResultElement.textContent = `${formatRcNumber(readableTime.value)} ${readableTime.unit}`;
         summaryElement.textContent = 'Calculated from resistance and capacitance.';
-        secondsElement.textContent = `${formatRcNumber(seconds, 8)} s`;
-        millisecondsElement.textContent = `${formatRcNumber(milliseconds, 4)} ms`;
-        microsecondsElement.textContent = `${formatRcNumber(microseconds, 2)} µs`;
-        breakdownElement.textContent = `τ = R × C. τ = ${formatRcNumber(resistanceOhms, 2)} Ω × ${formatRcNumber(capacitanceFarads, 8)} F = ${formatRcNumber(seconds, 8)} s.`;
+        secondsElement.textContent = `${formatRcNumber(seconds, 8)} ${timeUnits.s.label}`;
+        millisecondsElement.textContent = `${formatRcNumber(milliseconds, 4)} ${timeUnits.ms.label}`;
+        microsecondsElement.textContent = `${formatRcNumber(microseconds, 2)} ${timeUnits.us.label}`;
+        breakdownElement.textContent = `τ = R × C. τ = ${formatRcNumber(resistanceOhms, 2)} ${resistanceUnits.ohm.label} × ${formatRcNumber(capacitanceFarads, 8)} ${rcCapacitanceUnits.F.label} = ${formatRcNumber(seconds, 8)} ${timeUnits.s.label}.`;
         document.dispatchEvent(new CustomEvent('calculator:history-entry', {
             detail: {
                 mode: 'rc-time',

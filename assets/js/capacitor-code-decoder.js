@@ -2,24 +2,7 @@
 // DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
 // This is a critical part of the calculator's functionality.
 
-const codeDecoderUnits = {
-    pF: {
-        label: 'pF',
-        factor: 1,
-    },
-    nF: {
-        label: 'nF',
-        factor: 1e3,
-    },
-    uF: {
-        label: 'µF',
-        factor: 1e6,
-    },
-    F: {
-        label: 'F',
-        factor: 1e12,
-    },
-};
+const codeDecoderUnits = window.PracticalCalculatorUtils.units.capacitanceFromPicofarads;
 
 const formatDecodedValue = (value, options = {}) => {
     return window.PracticalCalculatorUtils.formatDecodedNumber(value, options);

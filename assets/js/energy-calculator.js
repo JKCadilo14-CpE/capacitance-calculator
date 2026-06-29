@@ -2,28 +2,11 @@
 //DO NOT MODIFY THIS CODE ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEFORE TOUCHING THIS CODE!!!!
 // This is a critical part of the calculator's functionality.
 
-const energyCapacitanceUnits = {
-    pF: {
-        label: 'pF',
-        factor: 1e-12,
-    },
-    nF: {
-        label: 'nF',
-        factor: 1e-9,
-    },
-    uF: {
-        label: 'µF',
-        factor: 1e-6,
-    },
-    mF: {
-        label: 'mF',
-        factor: 1e-3,
-    },
-    F: {
-        label: 'F',
-        factor: 1,
-    },
-};
+const energyCapacitanceUnits = window.PracticalCalculatorUtils.units.capacitanceWithMilli;
+
+const energyUnits = window.PracticalCalculatorUtils.units.energy;
+
+const energyVoltageUnits = window.PracticalCalculatorUtils.units.voltage;
 
 const normalizeEnergyValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
 
@@ -146,25 +129,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const capacitanceFarads = parsedCapacitance.value * capacitanceUnit.factor;
         const voltage = parsedVoltage.value;
         const joules = 0.5 * capacitanceFarads * (voltage ** 2);
-        const millijoules = joules * 1e3;
-        const microjoules = joules * 1e6;
+        const millijoules = joules / energyUnits.mJ.factor;
+        const microjoules = joules / energyUnits.uJ.factor;
         const formattedJoules = formatEnergyNumber(joules, 8);
 
         resultCard.classList.add('has-result');
         resultStateElement.textContent = 'Calculated';
-        primaryResultElement.textContent = `${formattedJoules} J`;
+        primaryResultElement.textContent = `${formattedJoules} ${energyUnits.J.label}`;
         summaryElement.textContent = 'Calculated from capacitance and voltage.';
-        joulesElement.textContent = `${formattedJoules} J`;
-        millijoulesElement.textContent = `${formatEnergyNumber(millijoules, 6)} mJ`;
-        microjoulesElement.textContent = `${formatEnergyNumber(microjoules, 4)} µJ`;
-        breakdownElement.textContent = `E = 1/2 × C × V². E = 0.5 × ${formatEnergyNumber(capacitanceFarads, 8)} F × ${formatEnergyNumber(voltage, 4)}² = ${formattedJoules} J.`;
-        technicalOutputElement.textContent = `Capacitance: ${formatEnergyNumber(capacitanceFarads, 8)} F · Voltage: ${formatEnergyNumber(voltage, 4)} V · Raw energy: ${formattedJoules} J`;
+        joulesElement.textContent = `${formattedJoules} ${energyUnits.J.label}`;
+        millijoulesElement.textContent = `${formatEnergyNumber(millijoules, 6)} ${energyUnits.mJ.label}`;
+        microjoulesElement.textContent = `${formatEnergyNumber(microjoules, 4)} ${energyUnits.uJ.label}`;
+        breakdownElement.textContent = `E = 1/2 × C × V². E = 0.5 × ${formatEnergyNumber(capacitanceFarads, 8)} ${energyCapacitanceUnits.F.label} × ${formatEnergyNumber(voltage, 4)}² = ${formattedJoules} ${energyUnits.J.label}.`;
+        technicalOutputElement.textContent = `Capacitance: ${formatEnergyNumber(capacitanceFarads, 8)} ${energyCapacitanceUnits.F.label} · Voltage: ${formatEnergyNumber(voltage, 4)} ${energyVoltageUnits.V.label} · Raw energy: ${formattedJoules} ${energyUnits.J.label}`;
         document.dispatchEvent(new CustomEvent('calculator:history-entry', {
             detail: {
                 mode: 'energy-stored',
                 modeName: 'Energy Stored',
-                inputSummary: `${formatEnergyNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatEnergyNumber(voltage, 4)} V`,
-                result: `${formattedJoules} J`,
+                inputSummary: `${formatEnergyNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatEnergyNumber(voltage, 4)} ${energyVoltageUnits.V.label}`,
+                result: `${formattedJoules} ${energyUnits.J.label}`,
                 restoreData: {
                     capacitanceValue: capacitanceInput.value.trim(),
                     capacitanceUnit: capacitanceUnitSelect.value,

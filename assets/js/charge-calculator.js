@@ -2,28 +2,11 @@
 // DO NO TOUCH ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEDORE TOUCHING THIS CODE!!!!
 // This is a critical part of the calculator's functionality.
 
-const chargeCapacitanceUnits = {
-    pF: {
-        label: 'pF',
-        factor: 1e-12,
-    },
-    nF: {
-        label: 'nF',
-        factor: 1e-9,
-    },
-    uF: {
-        label: 'µF',
-        factor: 1e-6,
-    },
-    mF: {
-        label: 'mF',
-        factor: 1e-3,
-    },
-    F: {
-        label: 'F',
-        factor: 1,
-    },
-};
+const chargeCapacitanceUnits = window.PracticalCalculatorUtils.units.capacitanceWithMilli;
+
+const chargeUnits = window.PracticalCalculatorUtils.units.charge;
+
+const chargeVoltageUnits = window.PracticalCalculatorUtils.units.voltage;
 
 const normalizeChargeValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
 
@@ -146,26 +129,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const capacitanceFarads = parsedCapacitance.value * capacitanceUnit.factor;
         const voltage = parsedVoltage.value;
         const coulombs = capacitanceFarads * voltage;
-        const millicoulombs = coulombs * 1e3;
-        const microcoulombs = coulombs * 1e6;
-        const nanocoulombs = coulombs * 1e9;
+        const millicoulombs = coulombs / chargeUnits.mC.factor;
+        const microcoulombs = coulombs / chargeUnits.uC.factor;
+        const nanocoulombs = coulombs / chargeUnits.nC.factor;
         const formattedCoulombs = formatChargeNumber(coulombs, 8);
 
         resultCard.classList.add('has-result');
         resultStateElement.textContent = 'Calculated';
-        primaryResultElement.textContent = `${formattedCoulombs} C`;
+        primaryResultElement.textContent = `${formattedCoulombs} ${chargeUnits.C.label}`;
         summaryElement.textContent = 'Calculated from capacitance and voltage.';
-        millicoulombsElement.textContent = `${formatChargeNumber(millicoulombs, 6)} mC`;
-        microcoulombsElement.textContent = `${formatChargeNumber(microcoulombs, 4)} µC`;
-        nanocoulombsElement.textContent = `${formatChargeNumber(nanocoulombs, 2)} nC`;
-        breakdownElement.textContent = `Q = C × V. Q = ${formatChargeNumber(capacitanceFarads, 8)} F × ${formatChargeNumber(voltage, 4)} V = ${formattedCoulombs} C.`;
-        technicalOutputElement.textContent = `Capacitance: ${formatChargeNumber(capacitanceFarads, 8)} F · Voltage: ${formatChargeNumber(voltage, 4)} V · Raw charge: ${formattedCoulombs} C`;
+        millicoulombsElement.textContent = `${formatChargeNumber(millicoulombs, 6)} ${chargeUnits.mC.label}`;
+        microcoulombsElement.textContent = `${formatChargeNumber(microcoulombs, 4)} ${chargeUnits.uC.label}`;
+        nanocoulombsElement.textContent = `${formatChargeNumber(nanocoulombs, 2)} ${chargeUnits.nC.label}`;
+        breakdownElement.textContent = `Q = C × V. Q = ${formatChargeNumber(capacitanceFarads, 8)} ${chargeCapacitanceUnits.F.label} × ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label} = ${formattedCoulombs} ${chargeUnits.C.label}.`;
+        technicalOutputElement.textContent = `Capacitance: ${formatChargeNumber(capacitanceFarads, 8)} ${chargeCapacitanceUnits.F.label} · Voltage: ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label} · Raw charge: ${formattedCoulombs} ${chargeUnits.C.label}`;
         document.dispatchEvent(new CustomEvent('calculator:history-entry', {
             detail: {
                 mode: 'charge-calculator',
                 modeName: 'Charge Calculator',
-                inputSummary: `${formatChargeNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatChargeNumber(voltage, 4)} V`,
-                result: `${formattedCoulombs} C`,
+                inputSummary: `${formatChargeNumber(parsedCapacitance.value, 4)} ${capacitanceUnit.label}, ${formatChargeNumber(voltage, 4)} ${chargeVoltageUnits.V.label}`,
+                result: `${formattedCoulombs} ${chargeUnits.C.label}`,
                 restoreData: {
                     capacitanceValue: capacitanceInput.value.trim(),
                     capacitanceUnit: capacitanceUnitSelect.value,

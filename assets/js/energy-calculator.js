@@ -8,44 +8,12 @@ const energyUnits = window.PracticalCalculatorUtils.units.energy;
 
 const energyVoltageUnits = window.PracticalCalculatorUtils.units.voltage;
 
-const normalizeEnergyValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
-
 const formatEnergyNumber = (value, maximumFractionDigits = 8) => {
     return window.PracticalCalculatorUtils.formatPrecisionNumber(value, maximumFractionDigits);
 };
 
 const parseEnergyValue = (input, label, options = {}) => {
-    const normalizedValue = normalizeEnergyValue(input.value);
-
-    if (!normalizedValue) {
-        return {
-            isValid: false,
-            message: `Enter a ${label.toLowerCase()} value.`,
-        };
-    }
-
-    const numericValue = Number(normalizedValue);
-
-    if (!Number.isFinite(numericValue)) {
-        return {
-            isValid: false,
-            message: `${label} must be a valid number.`,
-        };
-    }
-
-    if (options.allowZero ? numericValue < 0 : numericValue <= 0) {
-        return {
-            isValid: false,
-            message: options.allowZero
-                ? `${label} cannot be negative.`
-                : `${label} must be greater than zero.`,
-        };
-    }
-
-    return {
-        isValid: true,
-        value: numericValue,
-    };
+    return window.PracticalCalculatorUtils.parseNumericInputValue(input, label, options);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,40 +39,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const clearError = () => {
-        errorElement.textContent = '';
-        capacitanceInput.removeAttribute('aria-invalid');
-        voltageInput.removeAttribute('aria-invalid');
+        window.PracticalCalculatorUtils.clearInputErrorState(errorElement, [
+            capacitanceInput,
+            voltageInput,
+        ]);
     };
 
     const clearResult = () => {
-        resultCard.classList.remove('has-result');
-        resultStateElement.textContent = 'Ready';
-        primaryResultElement.textContent = '--';
-        summaryElement.textContent = 'Enter capacitance and voltage to calculate stored energy.';
-        joulesElement.textContent = '--';
-        millijoulesElement.textContent = '--';
-        microjoulesElement.textContent = '--';
-        breakdownElement.textContent = 'Formula: E = 1/2 × C × V².';
-        technicalOutputElement.textContent = 'Raw values will appear after calculation.';
-        technicalDetailsElement.open = false;
+        window.PracticalCalculatorUtils.clearResultState({
+            resultCard,
+            resultStateElement,
+            primaryResultElement,
+            summaryElement,
+            outputElements: [
+                joulesElement,
+                millijoulesElement,
+                microjoulesElement,
+            ],
+            breakdownElement,
+            technicalOutputElement,
+            technicalDetailsElement,
+            summaryText: 'Enter capacitance and voltage to calculate stored energy.',
+            breakdownText: 'Formula: E = 1/2 × C × V².',
+            technicalText: 'Raw values will appear after calculation.',
+        });
     };
 
     const resetCalculator = () => {
-        capacitanceInput.value = '';
-        capacitanceUnitSelect.value = 'uF';
-        voltageInput.value = '';
-        clearError();
-        clearResult();
+        window.PracticalCalculatorUtils.resetCapacitanceVoltageFields({
+            capacitanceInput,
+            capacitanceUnitSelect,
+            voltageInput,
+            clearError,
+            clearResult,
+        });
     };
 
     const showError = (input, message) => {
-        input.setAttribute('aria-invalid', 'true');
-        errorElement.textContent = message;
-        clearResult();
-        input.focus();
+        window.PracticalCalculatorUtils.showInputError({
+            input,
+            errorElement,
+            message,
+            clearResult,
+        });
     };
 
-    const getSupportedCapacitanceUnit = (unit) => (energyCapacitanceUnits[unit] ? unit : 'uF');
+    const getSupportedCapacitanceUnit = (unit) => {
+        return window.PracticalCalculatorUtils.getSupportedUnitKey(energyCapacitanceUnits, unit, 'uF');
+    };
 
     const calculateEnergyStored = () => {
         clearError();
@@ -160,15 +142,13 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateEnergyStored();
     });
 
-    [capacitanceInput, capacitanceUnitSelect, voltageInput].forEach((control) => {
-        control.addEventListener('input', () => {
-            clearError();
-            clearResult();
-        });
-        control.addEventListener('change', () => {
-            clearError();
-            clearResult();
-        });
+    window.PracticalCalculatorUtils.bindResultResetListeners([
+        capacitanceInput,
+        capacitanceUnitSelect,
+        voltageInput,
+    ], () => {
+        clearError();
+        clearResult();
     });
 
     clearButton.addEventListener('click', () => {

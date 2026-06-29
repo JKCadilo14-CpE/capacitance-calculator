@@ -1,4 +1,4 @@
-// Shared pure numeric helpers for practical calculators.
+// Shared helpers for practical calculators.
 // Keep this namespace small and explicit to avoid global script name collisions.
 
 window.PracticalCalculatorUtils = (() => {
@@ -211,12 +211,120 @@ window.PracticalCalculatorUtils = (() => {
         }));
     };
 
+    const parseNumericInputValue = (input, label, options = {}) => {
+        const normalizedValue = normalizeNumericValue(input.value);
+
+        if (!normalizedValue) {
+            return {
+                isValid: false,
+                message: `Enter a ${label.toLowerCase()} value.`,
+            };
+        }
+
+        const numericValue = Number(normalizedValue);
+
+        if (!Number.isFinite(numericValue)) {
+            return {
+                isValid: false,
+                message: `${label} must be a valid number.`,
+            };
+        }
+
+        if (options.allowZero ? numericValue < 0 : numericValue <= 0) {
+            return {
+                isValid: false,
+                message: options.allowZero
+                    ? `${label} cannot be negative.`
+                    : `${label} must be greater than zero.`,
+            };
+        }
+
+        return {
+            isValid: true,
+            value: numericValue,
+        };
+    };
+
+    const clearInputErrorState = (errorElement, inputs) => {
+        errorElement.textContent = '';
+        inputs.forEach((input) => {
+            input.removeAttribute('aria-invalid');
+        });
+    };
+
+    const clearResultState = ({
+        resultCard,
+        resultStateElement,
+        primaryResultElement,
+        summaryElement,
+        outputElements,
+        breakdownElement,
+        technicalOutputElement,
+        technicalDetailsElement,
+        summaryText,
+        breakdownText,
+        technicalText,
+    }) => {
+        resultCard.classList.remove('has-result');
+        resultStateElement.textContent = 'Ready';
+        primaryResultElement.textContent = '--';
+        summaryElement.textContent = summaryText;
+        outputElements.forEach((outputElement) => {
+            outputElement.textContent = '--';
+        });
+        breakdownElement.textContent = breakdownText;
+        technicalOutputElement.textContent = technicalText;
+        technicalDetailsElement.open = false;
+    };
+
+    const resetCapacitanceVoltageFields = ({
+        capacitanceInput,
+        capacitanceUnitSelect,
+        voltageInput,
+        clearError,
+        clearResult,
+    }) => {
+        capacitanceInput.value = '';
+        capacitanceUnitSelect.value = 'uF';
+        voltageInput.value = '';
+        clearError();
+        clearResult();
+    };
+
+    const showInputError = ({
+        input,
+        errorElement,
+        message,
+        clearResult,
+    }) => {
+        input.setAttribute('aria-invalid', 'true');
+        errorElement.textContent = message;
+        clearResult();
+        input.focus();
+    };
+
+    const getSupportedUnitKey = (unitMap, unit, fallbackUnit) => (unitMap[unit] ? unit : fallbackUnit);
+
+    const bindResultResetListeners = (controls, resetResultState) => {
+        controls.forEach((control) => {
+            control.addEventListener('input', resetResultState);
+            control.addEventListener('change', resetResultState);
+        });
+    };
+
     return Object.freeze({
+        bindResultResetListeners,
+        clearInputErrorState,
+        clearResultState,
         dispatchHistoryEntry,
         formatDecodedNumber,
         formatPrecisionNumber,
         formatRoundedNumber,
+        getSupportedUnitKey,
         normalizeNumericValue,
+        parseNumericInputValue,
+        resetCapacitanceVoltageFields,
+        showInputError,
         units,
     });
 })();

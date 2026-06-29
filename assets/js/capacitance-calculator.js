@@ -25,24 +25,10 @@ const minimumSeriesRows = 2;
 const minimumParallelRows = 2;
 
 const formatSeriesNumber = (value) => {
-    if (value === 0 || Object.is(value, -0)) {
-        return '0';
-    }
-
-    const absoluteValue = Math.abs(value);
-    const maximumFractionDigits = absoluteValue >= 1 ? 2 : 4;
-    const roundedValue = Number(value.toFixed(maximumFractionDigits));
-
-    if (roundedValue === 0 || absoluteValue >= 1e12) {
-        return value.toExponential(4).replace(/\.?0+e/, 'e');
-    }
-
-    return new Intl.NumberFormat('en-US', {
-        maximumFractionDigits,
-    }).format(roundedValue);
+    return window.PracticalCalculatorUtils.formatRoundedNumber(value);
 };
 
-const normalizeSeriesValue = (value) => value.trim().replace(/,/g, '');
+const normalizeSeriesValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
 
 const getReadableSeriesUnit = (valueInFarads) => {
     const absoluteValue = Math.abs(valueInFarads);

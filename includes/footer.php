@@ -6,6 +6,7 @@
 
     <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/main.js" defer></script>
     <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/mobile-nav.js" defer></script>
+    <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/practical-utils.js" defer></script>
     <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/capacitance-calculator.js" defer></script>
     <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/shared-keypad.js" defer></script>
     <script src="<?php echo htmlspecialchars($assetBase ?? 'assets', ENT_QUOTES, 'UTF-8'); ?>/js/capacitor-code-decoder.js" defer></script>

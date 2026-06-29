@@ -36,22 +36,10 @@ const rcCapacitanceUnits = {
     },
 };
 
-const normalizeRcValue = (value) => value.trim().replace(/,/g, '');
+const normalizeRcValue = (value) => window.PracticalCalculatorUtils.normalizeNumericValue(value);
 
 const formatRcNumber = (value, maximumFractionDigits = 6) => {
-    if (value === 0 || Object.is(value, -0)) {
-        return '0';
-    }
-
-    const absoluteValue = Math.abs(value);
-
-    if (absoluteValue !== 0 && absoluteValue < 0.000001) {
-        return value.toExponential(4).replace(/\.?0+e/, 'e');
-    }
-
-    return new Intl.NumberFormat('en-US', {
-        maximumFractionDigits,
-    }).format(value);
+    return window.PracticalCalculatorUtils.formatPrecisionNumber(value, maximumFractionDigits);
 };
 
 const getReadableTime = (seconds) => {

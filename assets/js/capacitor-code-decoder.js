@@ -22,25 +22,7 @@ const codeDecoderUnits = {
 };
 
 const formatDecodedValue = (value, options = {}) => {
-    if (value === 0 || Object.is(value, -0)) {
-        return '0';
-    }
-
-    if (options.forceInteger) {
-        return new Intl.NumberFormat('en-US', {
-            maximumFractionDigits: 0,
-        }).format(value);
-    }
-
-    const absoluteValue = Math.abs(value);
-
-    if (absoluteValue !== 0 && absoluteValue < 0.000001) {
-        return value.toExponential(4).replace(/\.?0+e/, 'e');
-    }
-
-    return new Intl.NumberFormat('en-US', {
-        maximumFractionDigits: absoluteValue >= 1 ? 4 : 8,
-    }).format(value);
+    return window.PracticalCalculatorUtils.formatDecodedNumber(value, options);
 };
 
 const getReadableDecodedUnit = (valueInPf) => {

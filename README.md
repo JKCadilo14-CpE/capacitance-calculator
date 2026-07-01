@@ -116,6 +116,9 @@ Each topic card includes theory, formula, applications, an interactive calculato
 ### RC Time Constant
 ![RC Time Constant](docs/screenshots/rc-time.png)
 
+### Capacitive Reactance
+![Capacitive Reactance](docs/screenshots/capacitive-reactance.png)
+
 ## Technologies Used
 
 - **PHP** for shared page includes and plain XAMPP routing
@@ -290,6 +293,7 @@ capacitance-calculator-main/
 │       ├── unit-converter.png
 │       ├── series-capacitance.png
 │       ├── rc-time.png
+│       ├── capacitive-reactance.png
 │       ├── charge-calculator.png
 │       ├── energy-stored.png
 │       ├── parallel-capacitance.png
@@ -377,4 +381,4 @@ This project is released under the **ISC License**.
 
 ## Keywords
 
-`capacitance calculator`, `capacitor calculator`, `electronics calculator`, `series capacitance`, `parallel capacitance`, `capacitor code decoder`, `RC time constant`, `charge calculator`, `energy stored capacitor`, `PHP project`, `XAMPP project`, `vanilla JavaScript`
+`capacitance calculator`, `capacitor calculator`, `electronics calculator`, `series capacitance`, `parallel capacitance`, `capacitor code decoder`, `RC time constant`, `capacitive reactance`, `reactance calculator`, `AC capacitor calculator`, `charge calculator`, `energy stored capacitor`, `PHP project`, `XAMPP project`, `vanilla JavaScript`

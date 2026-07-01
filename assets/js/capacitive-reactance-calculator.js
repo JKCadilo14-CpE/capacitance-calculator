@@ -1,4 +1,6 @@
 // Capacitive reactance calculator script: calculates Xc = 1 / (2πfC).
+//DO NOT MODIFY THIS CODE ANYMORE UNLESS YOU KNOW WHAT YOU ARE DOING!!! MAKE SURE YOU HAVE ENOUGH SLEEP BEFORE TOUCHING THIS CODE!!!!
+// This is a critical part of the calculator's functionality.
 
 const reactanceFrequencyUnits = window.PracticalCalculatorUtils.units.frequency;
 const reactanceCapacitanceUnits = window.PracticalCalculatorUtils.units.capacitanceWithMilli;

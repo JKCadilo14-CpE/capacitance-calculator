@@ -17,6 +17,7 @@ const requestedScreenshotFiles = [
     'parallel-capacitance.png',
     'code-decoder.png',
     'rc-time.png',
+    'capacitive-reactance.png',
     'charge-calculator.png',
     'energy-stored.png',
     'formula-reference.png',
@@ -234,6 +235,20 @@ const prepareRcTime = async (page) => {
     await expectEnabled(page, '[data-copy-result="rc-time"] [data-copy-button]');
 };
 
+const prepareCapacitiveReactance = async (page) => {
+    await selectCalculatorMode(page, 'capacitive-reactance');
+    await page.locator('#reactance-frequency-value').fill('1');
+    await page.locator('#reactance-frequency-unit').selectOption('kHz');
+    await page.locator('#reactance-capacitance-value').fill('100');
+    await page.locator('#reactance-capacitance-unit').selectOption('nF');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expectText(page, '#capacitive-reactance-primary-result', '1.59 kΩ');
+    await expectEnabled(page, '[data-copy-result="capacitive-reactance"] [data-copy-button]');
+    await page.locator('#capacitive-reactance-technical-details').evaluate((details) => {
+        details.open = true;
+    });
+};
+
 const prepareChargeCalculator = async (page) => {
     await selectCalculatorMode(page, 'charge-calculator');
     await page.locator('#charge-capacitance-value').fill('1000');
@@ -287,6 +302,21 @@ const getAdvancedPhysicsClip = async (page) => page.evaluate(() => {
     };
 });
 
+const getCapacitiveReactanceClip = async (page) => page.evaluate(() => {
+    const technicalDetails = document.querySelector('#capacitive-reactance-technical-details');
+    const pageWidth = document.documentElement.clientWidth;
+    const detailsBottom = technicalDetails
+        ? technicalDetails.getBoundingClientRect().bottom + window.scrollY
+        : document.documentElement.clientHeight;
+
+    return {
+        x: 0,
+        y: 0,
+        width: pageWidth,
+        height: Math.ceil(detailsBottom + 32),
+    };
+});
+
 const makeScreenshotTargets = (baseUrl) => [
     {
         name: 'Home page',
@@ -322,6 +352,13 @@ const makeScreenshotTargets = (baseUrl) => [
         fileName: 'rc-time.png',
         url: baseUrl,
         prepare: prepareRcTime,
+    },
+    {
+        name: 'Capacitive Reactance',
+        fileName: 'capacitive-reactance.png',
+        url: baseUrl,
+        prepare: prepareCapacitiveReactance,
+        clip: getCapacitiveReactanceClip,
     },
     {
         name: 'Charge Calculator',

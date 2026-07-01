@@ -1,6 +1,6 @@
 # Capacitance Calculator
 
-![Version](https://img.shields.io/badge/version-2.1.0-blue)
+![Version](https://img.shields.io/badge/version-3.0.0-blue)
 ![PHP](https://img.shields.io/badge/PHP-XAMPP%20%2F%20Apache-777BB4)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
@@ -8,22 +8,20 @@ A responsive, browser-based capacitance calculator suite for electronics student
 
 ## Project Status
 
-**Current version:** `v2.1.0`
+**Current version:** `v3.0.0`
 
 This project is a working educational/reference calculator suite. It runs locally with XAMPP and stores calculator history in the browser using `localStorage`. It does not use PHP sessions, MySQL, Composer, or a backend database yet.
 
-Version 2.1.0 focuses on internal architecture improvements and maintainability while preserving existing calculator behavior.
+Version 3.0.0 expands the practical calculator suite into AC capacitor behavior with a dedicated Capacitive Reactance calculator while preserving the existing Capacitance Calculator identity.
 
-## What's New in v2.1.0
+## What's New in v3.0.0
 
-- Cleaned up the practical calculator architecture
-- Added a shared practical utility layer
-- Extracted shared numeric formatting helpers
-- Extracted shared practical unit definitions
-- Centralized practical history helpers
-- Reduced duplicated implementation across practical calculators
-- Expanded Playwright regression coverage for practical calculators
-- Improved maintainability without changing calculator behavior
+- Added a Capacitive Reactance calculator using `Xc = 1 / (2πfC)`
+- Added frequency units for `Hz`, `kHz`, and `MHz`
+- Added reactance outputs in `Ω`, `kΩ`, and `MΩ`
+- Added formula breakdowns and technical details for AC reactance calculations
+- Added history, restore, TXT/CSV export, and copy result support for the new mode
+- Expanded Playwright regression coverage for the Capacitive Reactance workflow
 
 ## Live Demo
 
@@ -50,7 +48,7 @@ http://localhost/capacitance-calculator-main/
 
 ## Feature Highlights
 
-- **Seven calculator modes** in one clean interface
+- **Eight calculator modes** in one clean interface
 - **Advanced Physics section** with five additional theory-focused calculators
 - **Shared practical calculator utility layer** for common formatting, units, validation, and history helpers
 - **Mobile-friendly calculator controls** with a dedicated Unit Converter keypad and shared numeric keypad
@@ -80,6 +78,7 @@ http://localhost/capacitance-calculator-main/
 | **Parallel Capacitance** | Calculates total capacitance for capacitors connected across the same two nodes using `Ct = C1 + C2 + ...`. |
 | **Capacitor Code Decoder** | Decodes standard 3-digit capacitor codes such as `104`, `103`, `472`, and `223`. |
 | **RC Time Constant** | Calculates `τ = R × C` using resistance and capacitance values. |
+| **Capacitive Reactance** | Calculates AC reactance with `Xc = 1 / (2πfC)` and shows results in `Ω`, `kΩ`, and `MΩ`. |
 | **Charge Calculator** | Calculates stored charge with `Q = C × V` and shows results in `C`, `mC`, `µC`, and `nC`. |
 | **Energy Stored** | Calculates capacitor energy with `E = 1/2 × C × V²` and shows results in `J`, `mJ`, and `µJ`. |
 
@@ -183,6 +182,7 @@ Covered topics:
 - Parallel Capacitance
 - Capacitor Code Decoder
 - RC Time Constant
+- Capacitive Reactance
 - Charge Calculator
 - Energy Stored
 
@@ -269,6 +269,7 @@ capacitance-calculator-main/
 │       ├── advanced-physics.js
 │       ├── main.js
 │       ├── capacitance-calculator.js
+│       ├── capacitive-reactance-calculator.js
 │       ├── capacitor-code-decoder.js
 │       ├── charge-calculator.js
 │       ├── copy-result.js
@@ -313,6 +314,14 @@ capacitance-calculator-main/
 
 ## Version History
 
+### v3.0.0 – Capacitive Reactance Calculator
+
+- Added Capacitive Reactance Calculator using `Xc = 1 / (2πfC)`.
+- Added frequency units for `Hz`, `kHz`, and `MHz`.
+- Added reactance outputs in `Ω`, `kΩ`, and `MΩ`.
+- Added formula breakdown, technical details, copy result, local history, restore, and TXT/CSV export.
+- Expanded Playwright regression coverage for the new AC calculator mode.
+
 ### v2.1.0 – Practical Calculator Architecture Refactor
 
 - Added comprehensive regression coverage for practical calculators.
@@ -341,7 +350,6 @@ capacitance-calculator-main/
 
 ## Roadmap
 
-- Capacitive reactance calculator
 - RC filter tools
 - Printable formula and Advanced Physics references
 - Accessibility improvements

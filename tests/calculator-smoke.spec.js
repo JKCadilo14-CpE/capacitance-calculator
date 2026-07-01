@@ -347,6 +347,20 @@ test.describe('Capacitance Calculator smoke', () => {
     const modeSelector = page.getByRole('combobox', { name: /select calculator mode/i }).first();
     await expect(modeSelector).toBeVisible();
     await expect(modeSelector).toContainText('Unit Converter');
+    await expect(modeSelector).toContainText('Capacitive Reactance');
+
+    await modeSelector.selectOption('capacitive-reactance');
+    await expect(page.locator('#capacitive-reactance-panel')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Capacitive Reactance Calculator' })).toBeVisible();
+  });
+
+  test('formula reference includes capacitive reactance', async ({ page }) => {
+    await page.goto('/pages/formula-reference.php', { waitUntil: 'domcontentloaded' });
+
+    await expect(page.getByRole('heading', { name: 'Capacitance Formulas Made Friendly', level: 1 })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Capacitive Reactance' })).toHaveAttribute('href', '#capacitive-reactance');
+    await expect(page.locator('#capacitive-reactance')).toContainText('Xc = 1 / (2πfC)');
+    await expect(page.locator('#capacitive-reactance')).toContainText('1.59 kΩ');
   });
 
   test('advanced physics page is reachable and organized for future calculators', async ({ page }) => {

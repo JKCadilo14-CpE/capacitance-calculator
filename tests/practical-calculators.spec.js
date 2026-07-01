@@ -110,6 +110,18 @@ test.describe('Practical calculator regressions', () => {
     await page.locator('#rc-capacitance-unit').selectOption(capacitanceUnit);
   };
 
+  const fillReactance = async (page, {
+    frequencyValue = '1',
+    frequencyUnit = 'kHz',
+    capacitanceValue = '100',
+    capacitanceUnit = 'nF',
+  } = {}) => {
+    await page.locator('#reactance-frequency-value').fill(frequencyValue);
+    await page.locator('#reactance-frequency-unit').selectOption(frequencyUnit);
+    await page.locator('#reactance-capacitance-value').fill(capacitanceValue);
+    await page.locator('#reactance-capacitance-unit').selectOption(capacitanceUnit);
+  };
+
   const fillCharge = async (page, capacitanceValue = '1000', voltageValue = '12') => {
     await page.locator('#charge-capacitance-value').fill(capacitanceValue);
     await page.locator('#charge-capacitance-unit').selectOption('uF');
@@ -443,6 +455,98 @@ test.describe('Practical calculator regressions', () => {
     await expectHistoryDownloads(page, 'rc-time', 'rc-time-history.txt', 'rc-time-history.csv');
   });
 
+  test('capacitive reactance protects Xc calculation, validation, shared keypad submit, history, restore, copy, and export', async ({ page }) => {
+    await visitHome(page);
+    await selectMode(page, 'capacitive-reactance');
+
+    const copyButton = page.getByRole('button', { name: /copy capacitive reactance result/i });
+
+    await expect(copyButton).toBeDisabled();
+    await page.locator('#reactance-frequency-value').focus();
+    await page.locator('[data-shared-keypad-value="1"]').click();
+    await page.locator('#reactance-capacitance-value').focus();
+    await page.locator('[data-shared-keypad-value="1"]').click();
+    await page.locator('[data-shared-keypad-value="0"]').click();
+    await page.locator('[data-shared-keypad-value="0"]').click();
+    await page.locator('[data-shared-keypad-action="calculate"]').click();
+    await expect(page.locator('#capacitive-reactance-primary-result')).toHaveText('1.59 kΩ');
+    await expect(page.locator('#capacitive-reactance-result-ohms')).toHaveText('1,591.55 Ω');
+    await expect(page.locator('#capacitive-reactance-result-kilohms')).toHaveText('1.59 kΩ');
+    await expect(page.locator('#capacitive-reactance-result-megohms')).toHaveText('0.0016 MΩ');
+    await expect(page.locator('#capacitive-reactance-breakdown')).toContainText('Xc = 1 / (2πfC).');
+    await expect(page.locator('#capacitive-reactance-technical-output')).toContainText('Raw frequency');
+    await expect(page.locator('#capacitive-reactance-technical-output')).toContainText('Angular frequency 2πf');
+    await expect(copyButton).toBeEnabled();
+    expect(await copyResult(page, 'capacitive-reactance')).toBe('Capacitive Reactance\n1 kHz, 100 nF → 1.59 kΩ');
+
+    await page.locator('#clear-capacitive-reactance').click();
+    await expect(copyButton).toBeDisabled();
+    await fillReactance(page, {
+      frequencyValue: '1000',
+      frequencyUnit: 'Hz',
+      capacitanceValue: '0.1',
+      capacitanceUnit: 'uF',
+    });
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-primary-result')).toHaveText('1.59 kΩ');
+
+    await page.locator('#clear-capacitive-reactance').click();
+    await fillReactance(page, {
+      frequencyValue: '1',
+      frequencyUnit: 'MHz',
+      capacitanceValue: '1',
+      capacitanceUnit: 'mF',
+    });
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-primary-result')).toHaveText('0.0002 Ω');
+    await expect(page.locator('#capacitive-reactance-result-ohms')).toHaveText('0.0002 Ω');
+
+    await page.locator('#clear-capacitive-reactance').click();
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Enter a frequency value.');
+    await expect(page.locator('#reactance-frequency-value')).toHaveAttribute('aria-invalid', 'true');
+
+    await page.locator('#reactance-frequency-value').fill('abc');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Frequency must be a valid number.');
+
+    await page.locator('#reactance-frequency-value').fill('0');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Frequency must be greater than zero.');
+
+    await page.locator('#reactance-frequency-value').fill('-1');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Frequency must be greater than zero.');
+
+    await page.locator('#reactance-frequency-value').fill('1');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Enter a capacitance value.');
+
+    await page.locator('#reactance-capacitance-value').fill('abc');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Capacitance must be a valid number.');
+
+    await page.locator('#reactance-capacitance-value').fill('0');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Capacitance must be greater than zero.');
+
+    await page.locator('#reactance-capacitance-value').fill('-1');
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(page.locator('#capacitive-reactance-error')).toHaveText('Capacitance must be greater than zero.');
+
+    await fillReactance(page);
+    await submitForm(page, '#capacitive-reactance-form');
+    await expect(historyEntries(page, 'capacitive-reactance')).toHaveCount(4);
+    await historyButton(page, 'capacitive-reactance').click();
+    await expect(page.locator('#reactance-frequency-value')).toHaveValue('1');
+    await expect(page.locator('#reactance-frequency-unit')).toHaveValue('kHz');
+    await expect(page.locator('#reactance-capacitance-value')).toHaveValue('100');
+    await expect(page.locator('#reactance-capacitance-unit')).toHaveValue('nF');
+    await expect(page.locator('#capacitive-reactance-primary-result')).toHaveText('--');
+    await expect(copyButton).toBeDisabled();
+    await expectHistoryDownloads(page, 'capacitive-reactance', 'capacitive-reactance-history.txt', 'capacitive-reactance-history.csv');
+  });
+
   test('charge calculator protects Q = C x V, zero voltage, validation, history, restore, copy, and export', async ({ page }) => {
     await visitHome(page);
     await selectMode(page, 'charge-calculator');
@@ -540,6 +644,7 @@ test.describe('Practical calculator regressions', () => {
       ['parallel', 'Parallel'],
       ['code-decoder', 'Code Decoder'],
       ['rc-time', 'RC Time'],
+      ['capacitive-reactance', 'Capacitive Reactance'],
       ['charge-calculator', 'Charge Calculator'],
       ['energy-stored', 'Energy Stored'],
     ];

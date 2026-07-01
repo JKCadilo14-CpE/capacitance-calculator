@@ -35,7 +35,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-unit">Select Calculator Mode</label>
-                <select id="calculator-mode-unit" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-unit" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter" selected>Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -46,6 +46,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -162,7 +165,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-series">Select Calculator Mode</label>
-                <select id="calculator-mode-series" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-series" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series" selected>Series Capacitance</option>
@@ -173,6 +176,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -270,7 +276,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-parallel">Select Calculator Mode</label>
-                <select id="calculator-mode-parallel" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-parallel" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -281,6 +287,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -377,7 +386,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-code-decoder">Select Calculator Mode</label>
-                <select id="calculator-mode-code-decoder" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-code-decoder" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -388,6 +397,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -507,7 +519,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-rc-time">Select Calculator Mode</label>
-                <select id="calculator-mode-rc-time" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-rc-time" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -518,6 +530,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time" selected>RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -645,6 +660,160 @@ include __DIR__ . '/includes/header.php';
         </article>
     </div>
 
+    <div class="calculator-grid" id="capacitive-reactance-panel" role="region" aria-labelledby="capacitive-reactance-title" data-mode-panel="capacitive-reactance" hidden>
+        <article class="panel calculator-panel">
+            <div class="panel-header">
+                <i data-lucide="activity" aria-hidden="true"></i>
+                <h3 id="capacitive-reactance-title">Capacitive Reactance Calculator</h3>
+            </div>
+
+            <div class="mode-selector-card field-group">
+                <label for="calculator-mode-capacitive-reactance">Select Calculator Mode</label>
+                <select id="calculator-mode-capacitive-reactance" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
+                    <optgroup label="Basic">
+                        <option value="unit-converter">Unit Converter</option>
+                        <option value="series">Series Capacitance</option>
+                        <option value="parallel">Parallel Capacitance</option>
+                        <option value="code-decoder">Capacitor Code Decoder</option>
+                    </optgroup>
+                    <optgroup label="Circuit Calculations">
+                        <option value="rc-time">RC Time Constant</option>
+                        <option value="charge-calculator">Charge Calculator</option>
+                        <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance" selected>Capacitive Reactance</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <form class="rc-time-card capacitive-reactance-card calculator-device" id="capacitive-reactance-form" aria-describedby="capacitive-reactance-help capacitive-reactance-error" novalidate>
+                <div class="series-result-card capacitive-reactance-result-card calculator-result-display" id="capacitive-reactance-result-card" aria-live="polite" aria-atomic="true">
+                    <div class="series-result-header">
+                        <span class="result-label">Capacitive reactance</span>
+                        <span class="series-result-state" id="capacitive-reactance-result-state">Ready</span>
+                    </div>
+                    <output class="series-result-value" id="capacitive-reactance-primary-result">--</output>
+                    <span class="result-summary" id="capacitive-reactance-summary">Enter frequency and capacitance to calculate Xc.</span>
+                    <div class="copy-result-actions" data-copy-result="capacitive-reactance">
+                        <button class="button button-secondary copy-result-button" type="button" data-copy-button data-copy-mode="capacitive-reactance" aria-label="Copy Capacitive Reactance result" disabled>
+                            <i data-lucide="copy" aria-hidden="true"></i>
+                            Copy Result
+                        </button>
+                        <span class="copy-result-status" data-copy-status aria-live="polite"></span>
+                    </div>
+
+                    <div class="decoder-result-grid rc-result-grid capacitive-reactance-result-grid" aria-label="Capacitive reactance in common units">
+                        <div class="decoder-result-unit">
+                            <span>Ohms</span>
+                            <output id="capacitive-reactance-result-ohms">--</output>
+                        </div>
+                        <div class="decoder-result-unit">
+                            <span>Kilohms</span>
+                            <output id="capacitive-reactance-result-kilohms">--</output>
+                        </div>
+                        <div class="decoder-result-unit">
+                            <span>Megohms</span>
+                            <output id="capacitive-reactance-result-megohms">--</output>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calculator-input-section" data-shared-keypad-anchor>
+                    <p class="field-help" id="capacitive-reactance-help">
+                        Enter frequency and capacitance to calculate capacitive reactance with Xc = 1 / (2πfC).
+                    </p>
+
+                    <div class="rc-input-grid capacitive-reactance-input-grid">
+                        <div class="rc-input-pair">
+                            <div class="field-group">
+                                <label for="reactance-frequency-value">Frequency</label>
+                                <input id="reactance-frequency-value" name="reactance-frequency-value" type="text" inputmode="decimal" autocomplete="off" placeholder="1" data-shared-keypad-input data-keypad-type="decimal" data-keypad-label="Frequency">
+                            </div>
+                            <div class="field-group">
+                                <label for="reactance-frequency-unit">Unit</label>
+                                <select id="reactance-frequency-unit" name="reactance-frequency-unit">
+                                    <option value="Hz">Hz</option>
+                                    <option value="kHz" selected>kHz</option>
+                                    <option value="MHz">MHz</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rc-input-pair">
+                            <div class="field-group">
+                                <label for="reactance-capacitance-value">Capacitance</label>
+                                <input id="reactance-capacitance-value" name="reactance-capacitance-value" type="text" inputmode="decimal" autocomplete="off" placeholder="100" data-shared-keypad-input data-keypad-type="decimal" data-keypad-label="Capacitance">
+                            </div>
+                            <div class="field-group">
+                                <label for="reactance-capacitance-unit">Unit</label>
+                                <select id="reactance-capacitance-unit" name="reactance-capacitance-unit">
+                                    <option value="pF">pF</option>
+                                    <option value="nF" selected>nF</option>
+                                    <option value="uF">µF</option>
+                                    <option value="mF">mF</option>
+                                    <option value="F">F</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rc-actions capacitive-reactance-actions">
+                        <button class="button button-primary" type="submit">
+                            Calculate Reactance
+                        </button>
+                        <button class="button button-secondary" type="button" id="clear-capacitive-reactance">
+                            Clear
+                        </button>
+                    </div>
+
+                    <p class="field-error" id="capacitive-reactance-error" role="alert"></p>
+                </div>
+
+                <section class="calculation-history-placeholder" data-history-mode="capacitive-reactance" aria-labelledby="capacitive-reactance-history-title">
+                    <h4 id="capacitive-reactance-history-title">Recent Calculations</h4>
+                    <p data-history-empty>No saved calculations yet.</p>
+                    <ol class="history-list" data-history-list aria-label="Recent Capacitive Reactance calculations"></ol>
+                    <div class="history-actions">
+                        <button class="button button-secondary history-export" type="button" data-history-export="txt" aria-label="Export Capacitive Reactance history as TXT" disabled>
+                            Export TXT
+                        </button>
+                        <button class="button button-secondary history-export" type="button" data-history-export="csv" aria-label="Export Capacitive Reactance history as CSV" disabled>
+                            Export CSV
+                        </button>
+                        <button class="button button-secondary history-clear" type="button" data-history-clear aria-label="Clear Capacitive Reactance history">
+                            Clear History
+                        </button>
+                    </div>
+                </section>
+
+                <section class="calculator-explanation-section" aria-labelledby="capacitive-reactance-explanation-title">
+                    <h4 id="capacitive-reactance-explanation-title">Formula / Technical Details</h4>
+                    <div class="series-breakdown" id="capacitive-reactance-breakdown">
+                        Formula: Xc = 1 / (2πfC).
+                    </div>
+                    <details class="series-technical-details" id="capacitive-reactance-technical-details">
+                        <summary>Technical Details</summary>
+                        <output id="capacitive-reactance-technical-output">Raw values will appear after calculation.</output>
+                    </details>
+                </section>
+            </form>
+        </article>
+
+        <article class="panel notes-panel">
+            <div class="panel-header">
+                <i data-lucide="waves" aria-hidden="true"></i>
+                <h3>Reactance Formula</h3>
+            </div>
+            <ul class="debug-list">
+                <li>Capacitive reactance uses Xc = 1 / (2πfC).</li>
+                <li>Frequency is converted to Hz and capacitance to F before calculation.</li>
+                <li>Reactance decreases as frequency or capacitance increases.</li>
+                <li>This mode does not calculate RC filters or graph frequency response.</li>
+            </ul>
+        </article>
+    </div>
+
     <div class="calculator-grid" id="charge-calculator-panel" role="region" aria-labelledby="charge-calculator-title" data-mode-panel="charge-calculator" hidden>
         <article class="panel calculator-panel">
             <div class="panel-header">
@@ -654,7 +823,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-charge-calculator">Select Calculator Mode</label>
-                <select id="calculator-mode-charge-calculator" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-charge-calculator" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -665,6 +834,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator" selected>Charge Calculator</option>
                         <option value="energy-stored">Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>
@@ -800,7 +972,7 @@ include __DIR__ . '/includes/header.php';
 
             <div class="mode-selector-card field-group">
                 <label for="calculator-mode-energy-stored">Select Calculator Mode</label>
-                <select id="calculator-mode-energy-stored" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel charge-calculator-panel energy-stored-panel">
+                <select id="calculator-mode-energy-stored" data-mode-select aria-controls="unit-converter-panel series-panel parallel-panel code-decoder-panel rc-time-panel capacitive-reactance-panel charge-calculator-panel energy-stored-panel">
                     <optgroup label="Basic">
                         <option value="unit-converter">Unit Converter</option>
                         <option value="series">Series Capacitance</option>
@@ -811,6 +983,9 @@ include __DIR__ . '/includes/header.php';
                         <option value="rc-time">RC Time Constant</option>
                         <option value="charge-calculator">Charge Calculator</option>
                         <option value="energy-stored" selected>Energy Stored</option>
+                    </optgroup>
+                    <optgroup label="AC Calculations">
+                        <option value="capacitive-reactance">Capacitive Reactance</option>
                     </optgroup>
                 </select>
             </div>

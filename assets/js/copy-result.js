@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         parallel: 'Parallel Capacitance',
         'code-decoder': 'Capacitor Code Decoder',
         'rc-time': 'RC Time Constant',
+        'capacitive-reactance': 'Capacitive Reactance',
         'charge-calculator': 'Charge Calculator',
         'energy-stored': 'Energy Stored',
     };
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         parallel: '#parallel-result-card',
         'code-decoder': '#code-decoder-result-card',
         'rc-time': '#rc-result-card',
+        'capacitive-reactance': '#capacitive-reactance-result-card',
         'charge-calculator': '#charge-result-card',
         'energy-stored': '#energy-result-card',
     };

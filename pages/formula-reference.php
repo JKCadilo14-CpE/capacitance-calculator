@@ -15,7 +15,7 @@ include __DIR__ . '/../includes/header.php';
         <p class="eyebrow">Formula Reference</p>
         <h1 id="page-title">Capacitance Formulas Made Friendly</h1>
         <p class="hero-copy">
-            A quick guide to the seven calculator modes in v1.0. Each section
+            A quick guide to the supported calculator modes. Each section
             explains what the formula means, shows a simple example, and
             points out when you would use it in an electronics project.
         </p>
@@ -28,6 +28,7 @@ include __DIR__ . '/../includes/header.php';
         <a href="#parallel-capacitance">Parallel Capacitance</a>
         <a href="#capacitor-code-decoder">Capacitor Code Decoder</a>
         <a href="#rc-time-constant">RC Time Constant</a>
+        <a href="#capacitive-reactance">Capacitive Reactance</a>
         <a href="#charge-calculator">Charge Calculator</a>
         <a href="#energy-stored">Energy Stored</a>
     </nav>
@@ -208,6 +209,43 @@ include __DIR__ . '/../includes/header.php';
                 Use RC time constant calculations for simple timing circuits,
                 filters, debounce circuits, and capacitor charge/discharge
                 estimates.
+            </p>
+        </div>
+    </article>
+
+    <article class="formula-card panel" id="capacitive-reactance">
+        <div class="formula-card-header">
+            <i data-lucide="activity" aria-hidden="true"></i>
+            <div>
+                <p class="eyebrow">AC Calculation</p>
+                <h2>Capacitive Reactance</h2>
+            </div>
+        </div>
+
+        <div class="formula-block" aria-label="Capacitive reactance formula">
+            <code>Xc = 1 / (2πfC)</code>
+        </div>
+
+        <p>
+            Capacitive reactance describes how strongly a capacitor resists
+            changing current in an AC circuit. Higher frequency or higher
+            capacitance produces lower reactance.
+        </p>
+
+        <div class="reference-detail">
+            <h3>Example calculation</h3>
+            <p>
+                <strong>1 kHz</strong> with <strong>100 nF</strong> gives about
+                <strong>1.59 kΩ</strong>.
+            </p>
+        </div>
+
+        <div class="reference-detail">
+            <h3>When to use it</h3>
+            <p>
+                Use capacitive reactance when estimating how a capacitor behaves
+                with AC signals, coupling paths, bypass capacitors, and simple
+                frequency-dependent circuit behavior.
             </p>
         </div>
     </article>

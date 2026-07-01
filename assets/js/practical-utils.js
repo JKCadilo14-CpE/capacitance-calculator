@@ -81,6 +81,20 @@ window.PracticalCalculatorUtils = (() => {
                 factor: 1e6,
             },
         }),
+        frequency: freezeUnitMap({
+            Hz: {
+                label: 'Hz',
+                factor: 1,
+            },
+            kHz: {
+                label: 'kHz',
+                factor: 1e3,
+            },
+            MHz: {
+                label: 'MHz',
+                factor: 1e6,
+            },
+        }),
         voltage: freezeUnitMap({
             V: {
                 label: 'V',

@@ -13,6 +13,7 @@ const initializeHistory = () => {
         parallel: 'Parallel Capacitance',
         'code-decoder': 'Capacitor Code Decoder',
         'rc-time': 'RC Time Constant',
+        'capacitive-reactance': 'Capacitive Reactance',
         'charge-calculator': 'Charge Calculator',
         'energy-stored': 'Energy Stored',
     };
@@ -27,6 +28,7 @@ const initializeHistory = () => {
         parallel: [],
         'code-decoder': [],
         'rc-time': [],
+        'capacitive-reactance': [],
         'charge-calculator': [],
         'energy-stored': [],
     });

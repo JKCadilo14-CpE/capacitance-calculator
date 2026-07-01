@@ -1,27 +1,29 @@
 # Capacitance Calculator
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![PHP](https://img.shields.io/badge/PHP-XAMPP%20%2F%20Apache-777BB4)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
-A responsive, browser-based capacitance calculator suite for electronics students, hobbyists, makers, and beginners learning capacitor math. Built with plain PHP, HTML, CSS, and vanilla JavaScript, the project combines practical capacitor calculators, a beginner-friendly Formula Reference page, an Advanced Physics page, local history/export/copy tools, and a mobile-first interface.
+A responsive, browser-based capacitance calculator suite for electronics students, hobbyists, makers, and beginners learning capacitor math. Built with plain PHP, HTML, CSS, and vanilla JavaScript, the project combines practical capacitor calculators, a beginner-friendly Formula Reference page, an Advanced Physics page, local history/export/copy tools, and a responsive interface for desktop, tablet, and mobile devices.
 
 ## Project Status
 
-**Current version:** `v2.0.0`
+**Current version:** `v2.1.0`
 
 This project is a working educational/reference calculator suite. It runs locally with XAMPP and stores calculator history in the browser using `localStorage`. It does not use PHP sessions, MySQL, Composer, or a backend database yet.
 
-## What's New in v2.0.0
+Version 2.1.0 focuses on internal architecture improvements and maintainability while preserving existing calculator behavior.
 
-- Added an Advanced Physics page for capacitor theory and geometry calculators
-- Added five advanced capacitance calculators
-- Modularized the Advanced Physics JavaScript files
-- Added collapsible calculator workflows
-- Added Jump to Topics navigation
-- Added mobile navigation improvements for long Advanced Physics sections
-- Expanded Playwright UI regression coverage
-- Improved Advanced Physics result card presentation
+## What's New in v2.1.0
+
+- Cleaned up the practical calculator architecture
+- Added a shared practical utility layer
+- Extracted shared numeric formatting helpers
+- Extracted shared practical unit definitions
+- Centralized practical history helpers
+- Reduced duplicated implementation across practical calculators
+- Expanded Playwright regression coverage for practical calculators
+- Improved maintainability without changing calculator behavior
 
 ## Live Demo
 
@@ -50,6 +52,7 @@ http://localhost/capacitance-calculator-main/
 
 - **Seven calculator modes** in one clean interface
 - **Advanced Physics section** with five additional theory-focused calculators
+- **Shared practical calculator utility layer** for common formatting, units, validation, and history helpers
 - **Mobile-friendly calculator controls** with a dedicated Unit Converter keypad and shared numeric keypad
 - **Formula breakdowns and technical details** for supported calculator modes
 - **Recent Calculations history** stored locally per calculator mode
@@ -63,9 +66,10 @@ http://localhost/capacitance-calculator-main/
 - **Improved Advanced Physics result cards** with clearer primary results and secondary units
 - **Mobile sticky Jump to Topics button** on the Advanced Physics page
 - **Modular Advanced Physics JavaScript** under `assets/js/advanced/`
+- **Improved maintainability through shared helpers** while preserving calculator behavior
 - **Responsive design** for phones, tablets, and desktop screens
 - **Playwright screenshot automation** for GitHub-ready project images
-- **Expanded Playwright UI tests** for Advanced Physics navigation, collapse behavior, history restore, copy, and responsive checks
+- **Practical and Advanced Physics regression coverage** for calculator behavior, navigation, history restore, copy, export, and responsive checks
 
 ## Calculator Modes
 
@@ -98,19 +102,20 @@ Each topic card includes theory, formula, applications, an interactive calculato
 ### Home Page
 ![Home Page](docs/screenshots/home.png)
 
-### Unit Converter
-![Unit Converter](docs/screenshots/unit-converter.png)
-
-### Charge Calculator
-![Charge Calculator](docs/screenshots/charge-calculator.png)
-
-### Energy Stored
-![Energy Stored](docs/screenshots/energy-stored.png)
-
 ### Formula Reference
 ![Formula Reference](docs/screenshots/formula-reference.png)
 
-Advanced Physics screenshots are not included yet. They should be added in a future screenshot refresh.
+### Advanced Physics
+![Advanced Physics](docs/screenshots/advanced-physics.png)
+
+### Unit Converter
+![Unit Converter](docs/screenshots/unit-converter.png)
+
+### Series Capacitance
+![Series Capacitance](docs/screenshots/series-capacitance.png)
+
+### RC Time Constant
+![RC Time Constant](docs/screenshots/rc-time.png)
 
 ## Technologies Used
 
@@ -201,7 +206,7 @@ Because history uses `localStorage`, saved entries stay on the same browser and 
 
 ## Mobile Support
 
-The interface is designed mobile-first:
+The interface is responsive for desktop, tablet, and mobile devices:
 
 - Controls use touch-friendly sizing.
 - Calculator cards stack cleanly on small screens.
@@ -270,6 +275,7 @@ capacitance-calculator-main/
 │       ├── energy-calculator.js
 │       ├── history.js
 │       ├── mobile-nav.js
+│       ├── practical-utils.js
 │       ├── rc-time-calculator.js
 │       ├── shared-keypad.js
 │       ├── theme-toggle.js
@@ -278,10 +284,15 @@ capacitance-calculator-main/
 ├── docs/
 │   └── screenshots/
 │       ├── home.png
+│       ├── formula-reference.png
+│       ├── advanced-physics.png
 │       ├── unit-converter.png
+│       ├── series-capacitance.png
+│       ├── rc-time.png
 │       ├── charge-calculator.png
 │       ├── energy-stored.png
-│       └── formula-reference.png
+│       ├── parallel-capacitance.png
+│       └── code-decoder.png
 │
 ├── includes/
 │   ├── header.php
@@ -296,10 +307,19 @@ capacitance-calculator-main/
 │   └── capture-screenshots.js
 │
 └── tests/
-    └── calculator-smoke.spec.js
+    ├── calculator-smoke.spec.js
+    └── practical-calculators.spec.js
 ```
 
 ## Version History
+
+### v2.1.0 – Practical Calculator Architecture Refactor
+
+- Added comprehensive regression coverage for practical calculators.
+- Extracted shared formatting, normalization, validation, unit, and history helpers.
+- Reduced duplicated implementation across practical calculators.
+- Refactored Charge, Energy, RC Time, Capacitor Code Decoder, and Series/Parallel internals.
+- No calculator formulas, validation behavior, history, copy/export, or UI changed.
 
 ### v2.0.0 – Advanced Physics Update
 
@@ -326,7 +346,6 @@ capacitance-calculator-main/
 - Printable formula and Advanced Physics references
 - Accessibility improvements
 - More automated tests for calculator edge cases
-- Advanced Physics screenshots for the README
 
 ## Contributing
 

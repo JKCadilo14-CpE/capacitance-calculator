@@ -1,6 +1,6 @@
 # Capacitance Calculator
 
-![Version](https://img.shields.io/badge/version-3.0.0-blue)
+![Version](https://img.shields.io/badge/version-3.0.1-blue)
 ![PHP](https://img.shields.io/badge/PHP-XAMPP%20%2F%20Apache-777BB4)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
@@ -13,6 +13,14 @@ A responsive, browser-based capacitance calculator suite for electronics student
 This project is a working educational/reference calculator suite. It runs locally with XAMPP and stores calculator history in the browser using `localStorage`. It does not use PHP sessions, MySQL, Composer, or a backend database yet.
 
 Version 3.0.0 expands the practical calculator suite into AC capacitor behavior with a dedicated Capacitive Reactance calculator while preserving the existing Capacitance Calculator identity.
+
+### v3.0.1 – Mobile Shared Keypad UX Improvement
+
+- Improved the shared numeric keypad experience on mobile devices.
+- Automatically suppresses the native on-screen keyboard while the shared keypad is expanded.
+- Restores the native keyboard when the shared keypad is collapsed.
+- Desktop keyboard input remains unchanged.
+- Added Playwright regression tests for the shared keypad behavior.
 
 ## What's New in v3.0.0
 

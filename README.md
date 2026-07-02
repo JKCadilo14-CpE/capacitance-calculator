@@ -8,7 +8,7 @@ A responsive, browser-based capacitance calculator suite for electronics student
 
 ## Project Status
 
-**Current version:** `v3.0.0`
+**Current version:** `v3.0.1`
 
 This project is a working educational/reference calculator suite. It runs locally with XAMPP and stores calculator history in the browser using `localStorage`. It does not use PHP sessions, MySQL, Composer, or a backend database yet.
 

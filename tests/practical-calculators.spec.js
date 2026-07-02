@@ -134,6 +134,94 @@ test.describe('Practical calculator regressions', () => {
     await page.locator('#energy-voltage-value').fill(voltageValue);
   };
 
+  const expectManagedReadonly = async (locator, expected) => {
+    await expect.poll(async () => locator.evaluate((input) => ({
+      managed: input.dataset.keypadReadonlyManaged === 'true',
+      readOnly: input.readOnly,
+    }))).toEqual({
+      managed: expected,
+      readOnly: expected,
+    });
+  };
+
+  test.describe('shared keypad keyboard suppression', () => {
+    test('desktop users can still type normally while the shared keypad is expanded', async ({ page }) => {
+      await visitHome(page);
+      await selectMode(page, 'rc-time');
+
+      const resistanceInput = page.locator('#resistance-value');
+
+      await resistanceInput.focus();
+      await expect(resistanceInput).toBeFocused();
+      await expectManagedReadonly(resistanceInput, false);
+
+      await page.keyboard.type('12');
+      await expect(resistanceInput).toHaveValue('12');
+
+      await page.locator('[data-shared-keypad-value="3"]').click();
+      await expect(resistanceInput).toHaveValue('123');
+      await expectManagedReadonly(resistanceInput, false);
+    });
+
+    test.describe('mobile touch devices', () => {
+      test.use({
+        viewport: { width: 390, height: 844 },
+        isMobile: true,
+        hasTouch: true,
+      });
+
+      test('managed readonly follows shared keypad state without affecting other calculators', async ({ page }) => {
+        await visitHome(page);
+        await selectMode(page, 'rc-time');
+
+        const keypad = page.locator('#shared-input-keypad');
+        const keypadSummary = keypad.locator('summary');
+        const resistanceInput = page.locator('#resistance-value');
+        const capacitanceInput = page.locator('#rc-capacitance-value');
+
+        await expect(keypad).toBeVisible();
+        await resistanceInput.tap();
+        await expect(resistanceInput).toBeFocused();
+        await expectManagedReadonly(resistanceInput, true);
+
+        await page.locator('[data-shared-keypad-value="4"]').tap();
+        await expect(resistanceInput).toHaveValue('4');
+
+        await keypadSummary.click();
+        await expectManagedReadonly(resistanceInput, false);
+        await expect(resistanceInput).toHaveAttribute('data-keypad-active', 'true');
+
+        await resistanceInput.focus();
+        await page.keyboard.type('5');
+        await expect(resistanceInput).toHaveValue('45');
+
+        await keypadSummary.click();
+        await expectManagedReadonly(resistanceInput, true);
+
+        await capacitanceInput.tap();
+        await expectManagedReadonly(resistanceInput, false);
+        await expectManagedReadonly(capacitanceInput, true);
+        await page.locator('[data-shared-keypad-value="6"]').tap();
+        await expect(capacitanceInput).toHaveValue('6');
+
+        await selectMode(page, 'unit-converter');
+        await expectManagedReadonly(capacitanceInput, false);
+        await expect(keypad).toBeHidden();
+
+        const converterForm = page.locator('#unit-converter-form');
+        await converterForm.focus();
+        await page.keyboard.press('7');
+        await expect(page.locator('#calculator-input-display')).toHaveText('7');
+
+        await page.goto('/pages/advanced-physics.php', { waitUntil: 'domcontentloaded' });
+        await page.locator('#parallel-plate-capacitor [data-advanced-calculator-toggle]').click();
+        const advancedInput = page.locator('#parallel-plate-area');
+        await advancedInput.focus();
+        await expect.poll(async () => advancedInput.evaluate((input) => input.readOnly)).toBe(false);
+      });
+    });
+  });
+
   test('unit converter supports keypad, keyboard, swap, clear, backspace, decimal, zero, validation, history, copy, and export', async ({ page }) => {
     await visitHome(page);
 

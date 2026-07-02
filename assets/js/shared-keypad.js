@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let activeInput = null;
+    let managedReadonlyInput = null;
 
     const getVisiblePanel = () => Array.from(document.querySelectorAll('[data-mode-panel]'))
         .find((panel) => !panel.hidden);
@@ -21,6 +22,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDigitsInput = (input) => input?.dataset.keypadType === 'digits';
 
     const getInputLabel = (input) => input?.dataset.keypadLabel || input?.getAttribute('aria-label') || 'Input';
+
+    //Mobile devices feature for suppressing on-screen keyboard when the shared keypad is active. 
+    //DO NOT TOUCH ANYMORE!!! ALRAEDY TESTED AND WORKING. CHANGING THIS MAY BREAK THE FUNCTIONALITY. ANDRIOD AND IOS DEVICES TESTED!!!
+    const isTouchKeypadDevice = () => {
+        const hasCoarsePointer = typeof window.matchMedia === 'function'
+            && window.matchMedia('(pointer: coarse)').matches;
+        const hasTouchPoints = Number(navigator.maxTouchPoints || 0) > 0;
+
+        return hasCoarsePointer || hasTouchPoints;
+    };
+
+    const isKeypadExpanded = () => !keypad.hidden && (!keypad.matches('details') || keypad.open);
+
+    const isSuppressibleInput = (input) => {
+        if (!input?.matches(inputSelector)) {
+            return false;
+        }
+
+        const panel = input.closest('[data-mode-panel]');
+
+        return Boolean(panel && !panel.hidden && panel.dataset.modePanel !== unsupportedMode);
+    };
+
+    const shouldSuppressNativeKeyboard = () => (
+        isTouchKeypadDevice()
+        && isKeypadExpanded()
+        && isSuppressibleInput(activeInput)
+    );
+
+    const clearManagedReadonly = (input = managedReadonlyInput) => {
+        if (!input || input.dataset.keypadReadonlyManaged !== 'true') {
+            return;
+        }
+
+        input.readOnly = false;
+        delete input.dataset.keypadReadonlyManaged;
+
+        if (managedReadonlyInput === input) {
+            managedReadonlyInput = null;
+        }
+    };
+
+    const syncKeyboardSuppression = () => {
+        if (managedReadonlyInput && managedReadonlyInput !== activeInput) {
+            clearManagedReadonly(managedReadonlyInput);
+        }
+
+        if (!shouldSuppressNativeKeyboard()) {
+            clearManagedReadonly(activeInput);
+            clearManagedReadonly(managedReadonlyInput);
+            return;
+        }
+
+        if (activeInput.readOnly && activeInput.dataset.keypadReadonlyManaged !== 'true') {
+            return;
+        }
+
+        activeInput.readOnly = true;
+        activeInput.dataset.keypadReadonlyManaged = 'true';
+        managedReadonlyInput = activeInput;
+    };
 
     const getInsertionAnchor = (panel) => {
         if (!panel) {
@@ -56,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const placeKeypad = (panel = getVisiblePanel()) => {
         if (!panel || panel.dataset.modePanel === unsupportedMode) {
             keypad.hidden = true;
+            syncKeyboardSuppression();
             return;
         }
 
@@ -63,12 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!anchor) {
             keypad.hidden = true;
+            syncKeyboardSuppression();
             return;
         }
 
         anchor.insertAdjacentElement('afterend', keypad);
         keypad.hidden = false;
         refreshLucideIcons();
+        syncKeyboardSuppression();
     };
 
     const getActiveModeForm = () => {
@@ -88,8 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const clearActiveInput = () => {
+        clearManagedReadonly(activeInput);
         clearActiveHighlight();
         activeInput = null;
+        clearManagedReadonly(managedReadonlyInput);
         setStatus();
         updateDecimalState();
     };
@@ -105,13 +172,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        clearActiveHighlight();
+        if (activeInput !== input) {
+            clearManagedReadonly(activeInput);
+            clearActiveHighlight();
+        }
+
         activeInput = input;
         activeInput.classList.add('is-keypad-active');
         activeInput.dataset.keypadActive = 'true';
         setStatus(getInputLabel(activeInput));
         placeKeypad(panel);
         updateDecimalState();
+        syncKeyboardSuppression();
     };
 
     const focusActiveInput = () => {
@@ -268,6 +340,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    keypad.addEventListener('toggle', () => {
+        syncKeyboardSuppression();
+    });
+
     document.querySelectorAll('[data-mode-select]').forEach((select) => {
         select.addEventListener('change', () => {
             clearActiveInput();
@@ -281,6 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetInput) {
             setActiveInput(targetInput);
         }
+    });
+
+    window.addEventListener('pagehide', () => {
+        clearManagedReadonly(activeInput);
+        clearManagedReadonly(managedReadonlyInput);
     });
 
     placeKeypad();
